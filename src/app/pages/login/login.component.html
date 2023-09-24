@@ -1,0 +1,33 @@
+<main class="app_login">
+  <body>
+    <mat-card>
+      <mat-card-content class="mat-elevation-z10">
+        <form [formGroup]="form">
+          <p>
+            <img src="assets/img/logoSAM.svg" alt="Logotipo do sistema de apoio à manutenção." class="logotipo">
+          </p>
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>ID</mat-label>
+              <input matInput placeholder="Digite o usuário" formControlName="username">
+              <mat-error *ngIf="form?.controls?.username?.invalid && form?.controls?.username?.touched">Usuário obrigatório</mat-error>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+          <p>                     
+            <mat-form-field appearance="outline">
+              <mat-label>Senha</mat-label>
+              <input type="password" matInput placeholder="Digite a senha" formControlName="password">
+              <mat-error *ngIf="form?.controls?.username?.invalid && form?.controls?.username?.touched">Senha obrigatória</mat-error>
+              <mat-icon matSuffix>key</mat-icon>
+            </mat-form-field>
+          </p>
+          <p>
+            <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="login()">Entrar</button>
+          </p>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </body>
+</main>
+  
