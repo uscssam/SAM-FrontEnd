@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginRequest } from 'src/app/models/login-request';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,16 +11,27 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  form = new FormGroup({
+  formLogin = new FormGroup({
     username: new FormControl(undefined, [Validators.required]),
     password: new FormControl(undefined, [Validators.required])
   });
-  
+
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+    private loginService: LoginService
+  ) { }
 
   login() {
-    this.router.navigate(['home'])
+    let dataUser = <LoginRequest>this.formLogin.value;
+
+    this.loginService.loginAuth(dataUser).subscribe({
+      next: (value) => {
+        console.log('Login realizado com sucesso', value)
+        this.router.navigate(['home'])
+      },
+      error: (err) => {
+        console.log('Erro no login', err)
+      }
+    })
   }
 }
