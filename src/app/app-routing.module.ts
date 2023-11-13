@@ -14,6 +14,14 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) 
+  },
+  {
+    path: 'form-register',
+    loadChildren: () => import('./pages/form-register/form-register.module').then(m => m.FormRegisterModule) 
+  },
+  {
+    path: 'list-users',
+    loadChildren: () => import('./pages/list-users/list-users.module').then(m => m.ListUsersModule) 
   }
 ];
 

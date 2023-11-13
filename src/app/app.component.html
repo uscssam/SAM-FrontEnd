@@ -1,28 +1,19 @@
-<mat-drawer-container class="example-container" autosize>
-    <mat-drawer #drawer class="example-sidenav" mode="over">
-        <p>Auto-resizing sidenav</p>
-        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-        <button (click)="showFiller = !showFiller" mat-raised-button>
-            Toggle extra text
-        </button>
-    </mat-drawer>
-    <div class="container">
-        <nav *ngIf="showNav">
-            <mat-toolbar color="primary">
-                <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-                    (click)="drawer.toggle()">
-                    <mat-icon>menu</mat-icon>
-                </button>
-                <img src="assets/img/logoSAM.svg" alt="Logotipo do sistema de apoio à manutenção." class="logoNav">
-                <span>SAM - Sistema de Apoio à Manutenção</span>
-            </mat-toolbar>
-
-        </nav>
-        <div class="content">
-            <router-outlet></router-outlet>
-        </div>
-        <footer>
-            <p>Copyright © 2021-2023, SAM-APP. Todos os direitos reservados.</p>
-        </footer>
+<div class="container">
+    <nav *ngIf="showNav">
+        <mat-toolbar color="primary">
+            <div class="left">
+                <img src="assets/img/logoSAM.svg" alt="Logotipo do sistema de apoio à manutenção." class="logoNav" routerLink="/home">
+                <span routerLink="/home">SAM - Sistema de Apoio à Manutenção</span>
+            </div>
+            <div class="right">
+                <span routerLink="/home">Olá {{userClaim?.fullname}}</span>
+            </div>
+        </mat-toolbar>
+    </nav>
+    <div class="content">
+        <router-outlet></router-outlet>
     </div>
-</mat-drawer-container>
+    <footer>
+        <p>Copyright © 2021-2023, SAM-APP. Todos os direitos reservados.</p>
+    </footer>
+</div>

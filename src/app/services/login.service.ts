@@ -1,31 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginRequest } from '../models/login-request';
-import { Observable, map } from 'rxjs';
-import { LoginResponse } from '../models/login-response';
+import { LoginRequest } from '../interfaces/login-request';
+import { Observable, Subject, map } from 'rxjs';
+import { LoginResponse } from '../interfaces/login-response';
 import { Constants } from '../shared/constants';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { jwtDecode } from 'jwt-decode';
+import { UserClaim } from '../interfaces/user-claim';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  token!: LoginResponse;
-
+  token?: LoginResponse;
+  tokenData?: UserClaim;
+  onTokenData: Subject<UserClaim | undefined> = new Subject();
 
   constructor(
-    private http: HttpClient,
-    private jwtHelper: JwtHelperService
+    private http: HttpClient
   ) { }
 
   loginAuth(dataUser: LoginRequest): Observable<Boolean> {
-    return this.http.post<LoginResponse>(Constants.login, dataUser)
+    return this.http.post<LoginResponse>(Constants.Login, dataUser)
     .pipe(
       map(resp => {
         this.token = resp;
-        const tokenData = this.jwtHelper.decodeToken(resp.token);
-        console.log(tokenData);
+        this.tokenData = jwtDecode(resp.token);
+        // const claim = {
+        //   "sub": "SAM",
+        //   "module": "SAM",
+        //   "name": "alice",
+        //   "fullname": "Alice Angela",
+        //   "role": "Manager",
+        //   "exp": 1699831238,
+        //   "iss": "SAM",
+        //   "aud": "SAM"
+        // }
+        // this.tokenData = claim;
+        this.onTokenData.next(this.tokenData);
         return (resp?.token != null)
       })
     )

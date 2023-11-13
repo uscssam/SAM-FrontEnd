@@ -22,4 +22,6 @@ footer p {
 
 nav > mat-toolbar {
     background: linear-gradient(68deg, $sam-primary 35%, $sam-secondary 94%);
+    display: flex;
+    justify-content: space-between;
 }

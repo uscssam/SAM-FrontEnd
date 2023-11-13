@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginRequest } from 'src/app/models/login-request';
+import { LoginRequest } from 'src/app/interfaces/login-request';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({

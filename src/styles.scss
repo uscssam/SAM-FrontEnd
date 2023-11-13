@@ -42,3 +42,11 @@ $front-end-sam-theme: mat.define-light-theme((
 mat-error {
   font-size: 12px;
 }
+
+mat-form-field {
+  margin-bottom: 10px;
+}
+
+button {
+  font-size: 16px;
+}

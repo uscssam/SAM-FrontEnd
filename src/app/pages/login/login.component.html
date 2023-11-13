@@ -8,7 +8,7 @@
           </p>
           <p>
             <mat-form-field appearance="outline">
-              <mat-label>ID</mat-label>
+              <mat-label>Nome de usuário</mat-label>
               <input matInput placeholder="Digite o usuário" formControlName="username">
               <mat-error *ngIf="formLogin?.controls?.username?.invalid && formLogin?.controls?.username?.touched">Usuário obrigatório</mat-error>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
@@ -23,7 +23,7 @@
             </mat-form-field>
           </p>
           <p>
-            <button mat-raised-button color="primary" [disabled]="formLogin.invalid" (click)="login()">Entrar</button>
+            <button mat-fab extended color="primary" [disabled]="formLogin.invalid" (click)="login()">Entrar</button>
           </p>
         </form>
       </mat-card-content>
