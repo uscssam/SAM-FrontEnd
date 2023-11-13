@@ -9,6 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -20,14 +25,17 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     HttpClientModule,
     AppRoutingModule,
-
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+    }}),
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule
   ],
   providers: [
-    
+
   ],
   bootstrap: [AppComponent]
 })

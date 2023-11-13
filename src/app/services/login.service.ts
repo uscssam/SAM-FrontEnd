@@ -4,6 +4,7 @@ import { LoginRequest } from '../models/login-request';
 import { Observable, map } from 'rxjs';
 import { LoginResponse } from '../models/login-response';
 import { Constants } from '../shared/constants';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,10 @@ export class LoginService {
 
   token!: LoginResponse;
 
+
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService
   ) { }
 
   loginAuth(dataUser: LoginRequest): Observable<Boolean> {
@@ -21,6 +24,8 @@ export class LoginService {
     .pipe(
       map(resp => {
         this.token = resp;
+        const tokenData = this.jwtHelper.decodeToken(resp.token);
+        console.log(tokenData);
         return (resp?.token != null)
       })
     )
