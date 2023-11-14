@@ -6,11 +6,13 @@ import { SpecialityEnum } from "../enums/speciality.enum";
 export class Constants {
     constructor() {}
 
-    static Login = environment.baseUrlApi + 'login';
+    static login = environment.baseUrlApi + 'Login';
+    static user = environment.baseUrlApi + 'User'
+
     static Levels = <Option[]>[
-        { label: 'Atendente', code: ProfileLevelEnum.Employee.toString() },
-        { label: 'Técnico', code: ProfileLevelEnum.Technician.toString() },
-        { label: 'Gerente', code: ProfileLevelEnum.Manager.toString() },
+        { label: 'Atendente', code: ProfileLevelEnum.Atendente.toString() },
+        { label: 'Técnico', code: ProfileLevelEnum.Técnico.toString() },
+        { label: 'Gerente', code: ProfileLevelEnum.Gerente.toString() },
     ]
     static Specialities = <Option[]>[
         { label: 'Não se aplica', code: null },

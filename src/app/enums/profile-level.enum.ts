@@ -1,5 +1,5 @@
 export enum ProfileLevelEnum {
-    Employee = 1,
-    Technician = 2,
-    Manager = 3
+    Atendente = 1,
+    Técnico = 2,
+    Gerente = 3
 }

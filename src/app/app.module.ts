@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SamInterceptor } from './shared/interceptors/sam.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -25,7 +26,11 @@ export function tokenGetter() {
     MatToolbarModule
   ],
   providers: [
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SamInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

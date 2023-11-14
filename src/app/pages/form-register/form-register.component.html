@@ -37,6 +37,6 @@
             </mat-select>
             <mat-error *ngIf="(formUser.get('speciality')?.hasError('required'))">Especialidade é obrigatória *</mat-error>
         </mat-form-field>
-        <button mat-fab extended color="primary" type="button">Cadastrar usuário</button>
+        <button mat-fab extended color="primary" type="button"  [disabled]="formUser.invalid" (click)="registerUserButton()">Cadastrar usuário</button>
     </form>
 </div>

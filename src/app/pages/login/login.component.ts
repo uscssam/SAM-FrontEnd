@@ -12,8 +12,8 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent {
 
   formLogin = new FormGroup({
-    username: new FormControl(undefined, [Validators.required]),
-    password: new FormControl(undefined, [Validators.required])
+    username: new FormControl('alice', [Validators.required]),
+    password: new FormControl('12345', [Validators.required])
   });
 
   constructor(
@@ -25,9 +25,8 @@ export class LoginComponent {
     let dataUser = <LoginRequest>this.formLogin.value;
 
     this.loginService.loginAuth(dataUser).subscribe({
-      next: (value) => {
-        console.log('Login realizado com sucesso', value)
-        this.router.navigate(['home'])
+      next: _ => {
+        this.router.navigate(['home']);
       },
       error: (err) => {
         console.log('Erro no login', err)

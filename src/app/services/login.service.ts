@@ -12,7 +12,7 @@ import { UserClaim } from '../interfaces/user-claim';
 })
 export class LoginService {
 
-  token?: LoginResponse;
+  token: string = '';
   tokenData?: UserClaim;
   onTokenData: Subject<UserClaim | undefined> = new Subject();
 
@@ -21,26 +21,14 @@ export class LoginService {
   ) { }
 
   loginAuth(dataUser: LoginRequest): Observable<Boolean> {
-    return this.http.post<LoginResponse>(Constants.Login, dataUser)
-    .pipe(
-      map(resp => {
-        this.token = resp;
-        this.tokenData = jwtDecode(resp.token);
-        // const claim = {
-        //   "sub": "SAM",
-        //   "module": "SAM",
-        //   "name": "alice",
-        //   "fullname": "Alice Angela",
-        //   "role": "Manager",
-        //   "exp": 1699831238,
-        //   "iss": "SAM",
-        //   "aud": "SAM"
-        // }
-        // this.tokenData = claim;
-        this.onTokenData.next(this.tokenData);
-        return (resp?.token != null)
-      })
-    )
-
+    return this.http.post<LoginResponse>(Constants.login, dataUser)
+      .pipe(
+        map(resp => {
+          this.token = resp.token;
+          this.tokenData = jwtDecode(resp.token);
+          this.onTokenData.next(this.tokenData);
+          return (resp?.token != null)
+        })
+      )
   }
 }
