@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileLevelEnum } from 'src/app/enums/profile-level.enum';
+import { SpecialityEnum } from 'src/app/enums/speciality.enum';
 import { UserResponse } from 'src/app/interfaces/user-response';
-import { ListUsersService } from 'src/app/services/list-users.service';
+import { UserService } from 'src/app/services/user.service';
+import { UserRequest } from '../../interfaces/user-request';
+import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-users',
@@ -12,21 +16,13 @@ import { ListUsersService } from 'src/app/services/list-users.service';
 export class ListUsersComponent implements OnInit {
 
   listUsers: UserResponse[] = [];
-  displayedColumns = ['userName', 'fullname', 'level'];
+  displayedColumns = ['userName', 'fullname', 'level', 'speciality', 'email', 'phone', 'delete'];
   enumLevels = ProfileLevelEnum;
-
-  // available: true
-  // deletedAt: null
-  // email: "alice@gmail.com"
-  // fullname: "Alice Angela"
-  // id: 1
-  // level: 3
-  // phone: null
-  // speciality: 1
-  // userName: "alice"
-
+  speciality = SpecialityEnum;
+  
   constructor(
-      private listUserService: ListUsersService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -34,7 +30,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   getUsers() {
-    this.listUserService.getUsers().subscribe({
+    this.userService.getUsers().subscribe({
       next: (value) => {
         this.listUsers = value;
         console.log(value);
@@ -44,4 +40,42 @@ export class ListUsersComponent implements OnInit {
       },
     })
   }
+
+  deleteUser(index: number) {
+    const id = this.listUsers[index].id;
+    this.userService.deleteUser(id).subscribe({
+      next: _ => {
+        this.getUsers();
+        alert('Cliente deletado com sucesso!')
+      },
+      error: err => {
+        console.log(err);
+        
+      }
+    });
+  }
+
+  editUser(index: number) {
+    const user = this.listUsers[index];
+    const dialogRef = this.dialog.open(DialogEditUserComponent, {
+      data: user
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      result && this.okEditUser(result);
+    });
+  }
+
+  okEditUser(user: UserRequest) {
+    user.speciality = Number(user.speciality);
+    user.level = Number(user.level);
+    if (!user.password) user.password = undefined; 
+    this.userService.updateUser(user).subscribe({
+      next: _ => {
+        this.getUsers();
+      },
+      error: err => {}
+    });
+  }
+
 }

@@ -1,4 +1,4 @@
 export enum SpecialityEnum {
-    Eletric = 1,
-    Mechanic = 2
+    Elétrico = 1,
+    Mecânico = 2
 }

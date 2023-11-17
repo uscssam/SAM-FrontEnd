@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { UserClaim } from './interfaces/user-claim';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   
   constructor(
     private route: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -27,6 +29,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (window.location.pathname != '/login') this.showNav = true
       else this.showNav = false
     })
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

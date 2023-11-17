@@ -1,33 +1,32 @@
 <main class="app_login">
-  <body>
-    <mat-card>
-      <mat-card-content class="mat-elevation-z10">
-        <form [formGroup]="formLogin">
-          <p>
-            <img src="assets/img/logoSAM.svg" alt="Logotipo do sistema de apoio à manutenção." class="logotipo">
-          </p>
-          <p>
-            <mat-form-field appearance="outline">
-              <mat-label>Nome de usuário</mat-label>
-              <input matInput placeholder="Digite o usuário" formControlName="username">
-              <mat-error *ngIf="formLogin?.controls?.username?.invalid && formLogin?.controls?.username?.touched">Usuário obrigatório</mat-error>
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-          <p>                     
-            <mat-form-field appearance="outline">
-              <mat-label>Senha</mat-label>
-              <input type="password" matInput placeholder="Digite a senha" formControlName="password">
-              <mat-error *ngIf="formLogin?.controls?.username?.invalid && formLogin?.controls?.username?.touched">Senha obrigatória</mat-error>
-              <mat-icon matSuffix>key</mat-icon>
-            </mat-form-field>
-          </p>
-          <p>
-            <button mat-fab extended color="primary" [disabled]="formLogin.invalid" (click)="login()">Entrar</button>
-          </p>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </body>
+  <mat-card>
+    <mat-card-content class="mat-elevation-z10">
+      <form [formGroup]="formLogin">
+        <p>
+          <img src="assets/img/logoSam.png" alt="Logotipo do sistema de apoio à manutenção." class="logotipo">
+        </p>
+        <h3>Bem vindo ao SAM - Sistema de Apoio à Manutenção!</h3>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Nome de usuário</mat-label>
+            <input matInput placeholder="Digite o usuário" formControlName="username">
+            <mat-error *ngIf="formLogin?.controls?.username?.invalid && formLogin?.controls?.username?.touched">Usuário obrigatório</mat-error>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+        </p>
+        <p>                     
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input type="{{ hide ? 'text' : 'password' }}" matInput placeholder="Digite a senha" formControlName="password">
+            <mat-error *ngIf="formLogin?.controls?.username?.invalid && formLogin?.controls?.username?.touched">Senha obrigatória</mat-error>
+            <mat-icon matSuffix (click)="hidePassword()">{{ hide ? 'lock' : 'lock_open' }}</mat-icon>
+          </mat-form-field>
+        </p>
+        <p>
+          <button mat-fab extended color="primary" [disabled]="formLogin.invalid" (click)="login()">Entrar</button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </main>
   

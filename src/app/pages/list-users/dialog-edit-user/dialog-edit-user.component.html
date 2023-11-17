@@ -1,0 +1,57 @@
+<mat-dialog-content class="mat-typography">
+  <h2>Usuário à ser alterado:</h2>
+  <form [formGroup]="formUser">
+    <mat-form-field>
+      <mat-label>Nome de usuário</mat-label>
+      <input type="text" matInput formControlName="userName" placeholder="ex: antonio">
+      <mat-error *ngIf="(formUser.get('userName')?.hasError('required'))">Nome é obrigatório *</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Senha</mat-label>
+      <input type="text" matInput formControlName="password" placeholder="ex: Sa12345.!">
+      <mat-error *ngIf="(formUser.get('password')?.hasError('password'))">Senha é obrigatória *</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nome completo</mat-label>
+      <input type="text" matInput formControlName="fullname" placeholder="Ex. Antonio Coutinho">
+      <mat-error *ngIf="(formUser.get('fullname')?.hasError('required'))">Nome completo é obrigatório *</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Telefone</mat-label>
+      <input type="tel" matInput formControlName="phone" placeholder="Ex. (11) 91234-5678">
+      <mat-error *ngIf="(formUser.get('phone')?.hasError('required'))">Telefone é obrigatório *</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+      <mat-error
+        *ngIf="(formUser.get('email')?.hasError('email') && !formUser.get('email')?.hasError('required'))">Digite um
+        email válido</mat-error>
+      <mat-error *ngIf="(formUser.get('email')?.hasError('required'))">Email é obrigatório *</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nível de acesso</mat-label>
+      <mat-select formControlName="level">
+        <mat-option *ngFor="let level of levels" [value]="level.code">{{level.label}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="(formUser.get('level')?.hasError('required'))">Nível de acesso é obrigatório *</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Especialidade</mat-label>
+      <mat-select formControlName="speciality">
+        <mat-option *ngFor="let speciality of specialities" [value]="speciality.code">{{speciality.label}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="(formUser.get('speciality')?.hasError('required'))">Especialidade é obrigatória *</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="formUser.value" cdkFocusInitial [disabled]="formUser.invalid">Alterar</button>
+</mat-dialog-actions>

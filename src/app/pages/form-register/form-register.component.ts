@@ -1,8 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Option } from 'src/app/interfaces/option';
-import { FormRegisterUserService } from 'src/app/services/form-register-user.service';
+import { UserService } from 'src/app/services/user.service';
 import { Constants } from 'src/app/shared/constants';
 
 @Component({
@@ -20,13 +20,14 @@ export class FormRegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private formRegisterUser: FormRegisterUserService,
-    private router: Router
+    private userService: UserService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     this.formUser = this.formBuilder.group({
       userName: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required]),
       fullname: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       phone: new FormControl(null, [Validators.required]),
@@ -39,16 +40,20 @@ export class FormRegisterComponent implements OnInit {
     let requestBody = this.formUser.value;
     requestBody.level = Number(requestBody.level);
     requestBody.speciality = requestBody.speciality && Number(requestBody.speciality);
-    this.formRegisterUser.registerUser(requestBody).subscribe({
+    this.userService.createUser(requestBody).subscribe({
       next: _ => {
         this.message = 'Cadastro realizado com sucesso!';
-        this.router.navigate(['home']);
+        this.location.back();
       },
       error: _ => {
         this.error = true;
         this.message = 'Desculpe. Falha ao cadastrar, tente novamente mais tarde.';
       }
     })
+  }
+
+  cancel() {
+    this.location.back();
   }
 
 }

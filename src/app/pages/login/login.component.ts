@@ -10,16 +10,22 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  
+  hide: boolean = false;
 
   formLogin = new FormGroup({
-    username: new FormControl('alice', [Validators.required]),
-    password: new FormControl('12345', [Validators.required])
+    username: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required])
   });
 
   constructor(
     private router: Router,
     private loginService: LoginService
   ) { }
+
+  hidePassword() {
+      this.hide = !this.hide
+  }
 
   login() {
     let dataUser = <LoginRequest>this.formLogin.value;

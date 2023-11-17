@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SamInterceptor } from './shared/interceptors/sam.interceptor';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -23,7 +25,9 @@ export function tokenGetter() {
     HttpClientModule,
     AppRoutingModule,
 
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     {

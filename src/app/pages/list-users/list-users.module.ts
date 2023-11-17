@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 import { ListUsersRoutingModule } from './list-users-routing.module';
 import { ListUsersComponent } from './list-users.component';
-import { MatTableModule } from '@angular/material/table';
-
 
 @NgModule({
   declarations: [
@@ -13,7 +15,11 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     ListUsersRoutingModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
   ]
 })
 export class ListUsersModule { }

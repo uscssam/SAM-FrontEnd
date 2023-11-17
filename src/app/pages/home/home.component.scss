@@ -4,13 +4,13 @@ div.container {
     flex-basis: 100%;
     justify-content: center;
     align-items: center;
-    padding: 24px;
-    height: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    gap: 20px;
 }
 
 .menu {
     width: 300px;
-    margin-right: 24px;
 }
 
 mat-card-content {
