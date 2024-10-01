@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { SamInterceptor } from './shared/interceptors/sam.interceptor';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ListMachinesComponent } from './pages/list-machines/list-machines.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -16,7 +17,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +25,6 @@ export function tokenGetter() {
     RouterModule,
     HttpClientModule,
     AppRoutingModule,
-
     MatToolbarModule,
     MatIconModule,
     MatButtonModule

@@ -7,10 +7,10 @@ import { Constants } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-form-register',
-  templateUrl: './form-register.component.html',
-  styleUrls: ['./form-register.component.scss']
+  templateUrl: './form-register-user.component.html',
+  styleUrls: ['./form-register-user.component.scss']
 })
-export class FormRegisterComponent implements OnInit {
+export class FormRegisterUserComponent implements OnInit {
 
   formUser: FormGroup = new FormGroup({});
   levels: Option[] = Constants.Levels;

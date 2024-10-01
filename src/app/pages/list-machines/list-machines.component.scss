@@ -1,0 +1,39 @@
+@import '../../../assets/styles/variables';
+
+main {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+}
+
+.example-card {
+    max-width: 250px;
+    background-color: rgba(148, 62, 139, .5);
+}
+
+.example-header-image {
+    background-size: cover;
+}
+
+.align-btn-card {
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.content-info-machine {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-machine {
+    display: flex;
+    flex-direction: row;
+}
+
+.circle-status {
+    margin-right: 4px;
+    margin-left: -2px;
+}

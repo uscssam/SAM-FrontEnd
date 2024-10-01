@@ -1,28 +1,28 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
+import { FormRegisterMachineRoutingModule } from './form-register-machine-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { FormRegisterRoutingModule } from './form-register-routing.module';
-import { FormRegisterComponent } from './form-register.component';
 import { MatButtonModule } from '@angular/material/button';
+import { FormRegisterMachineComponent } from './form-register-machine.component';
+
 
 @NgModule({
   declarations: [
-    FormRegisterComponent
+    FormRegisterMachineComponent
   ],
   imports: [
     CommonModule,
-    FormRegisterRoutingModule,
+    FormRegisterMachineRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule
   ]
 })
-export class FormRegisterModule { }
+export class FormRegisterMachineModule { }

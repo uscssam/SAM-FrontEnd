@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from './shared/guards/auth.guard';
+import {  } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,18 +15,28 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
-    canActivate: [authGuard]
+    canActivate: []
   },
   {
-    path: 'form-register',
-    loadChildren: () => import('./pages/form-register/form-register.module').then(m => m.FormRegisterModule),
-    canActivate: [authGuard]
+    path: 'form-register-user',
+    loadChildren: () => import('./pages/form-register-user/form-register-user.module').then(m => m.FormRegisterUserModule),
+    canActivate: []
   },
   {
     path: 'list-users',
     loadChildren: () => import('./pages/list-users/list-users.module').then(m => m.ListUsersModule), 
-    canActivate: [authGuard]
-  }
+    canActivate: []
+  },
+  {
+    path: 'form-register-machine',
+    loadChildren: () => import('./pages/form-register-machine/form-register-machine.module').then(m => m.FormRegisterMachineModule),
+    canActivate: []
+  },
+  {
+    path: 'list-machines',
+    loadChildren: () => import('./pages/list-machines/list-machines.module').then(m => m.ListMachinesModule),
+    canActivate: []
+  },
 ];
 
 @NgModule({
