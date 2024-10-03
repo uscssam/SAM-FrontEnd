@@ -19,6 +19,7 @@ export class ListMachinesComponent implements OnInit {
   listMachine: MachineRequest[] = [];
   displayedColumns = ['name', 'status', 'lastMaintenance', 'preventive'];
   status = StatusMachineEnum;
+  statusTest = true;
   
   constructor(
     private machineService: MachineService,

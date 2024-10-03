@@ -38,17 +38,17 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <div *ngFor="let machine of listMachines">
+    <div>
       <mat-card class="example-card" appearance="outlined">
-        <img mat-card-image src="assets/img/icone-card-mapa-maquinas.jpg" alt="Figura de uma máquina de garra de parque de diversão">
+        <img class="example-header-image" mat-card-image src="assets/img/icone-card-mapa-maquinas.jpg" alt="Figura de uma máquina de garra de parque de diversão">
         <mat-card-content class="content-info-machine">
-          {{ machine.id }}
-          <div class="status-machine ">
+          <p class="align-name-machine">Carrossel</p>
+          <div class="status-machine" [ngClass]="{ 'statusTest-true': statusTest, 'statusTest-false': !statusTest }">
             <mat-icon class="circle-status">circle</mat-icon>
-            {{ machine.id }}
+          Ativa
           </div>
-          Última manutenção:
-          Manutenção preventiva:
+          Última manutenção: 10/07/2024
+          Manutenção preventiva: 10/10/2024
         </mat-card-content>
         <mat-card-actions class="align-btn-card">
           <button mat-mini-fab color="primary" aria-label="Botão para deletar máquina">

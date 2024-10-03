@@ -10,12 +10,13 @@ main {
 }
 
 .example-card {
-    max-width: 250px;
+    max-width: 300px;
     background-color: rgba(148, 62, 139, .5);
 }
 
 .example-header-image {
-    background-size: cover;
+    height: 200px;
+    object-fit: cover;
 }
 
 .align-btn-card {
@@ -26,11 +27,27 @@ main {
 .content-info-machine {
     display: flex;
     flex-direction: column;
+    padding: 5px 12px 0px;
+}
+
+.align-name-machine{
+    font-size: x-large;
+    text-align: center;
+    line-height: 0;
+    font-variant: all-petite-caps;
 }
 
 .status-machine {
     display: flex;
     flex-direction: row;
+
+    &.statusTest-true {
+        color: green; // Cor quando status é true
+      }
+    
+    &.statusTest-false {
+    color: red; // Cor quando status é false
+    }
 }
 
 .circle-status {
