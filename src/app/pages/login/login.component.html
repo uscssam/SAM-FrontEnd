@@ -1,7 +1,7 @@
 <main class="app_login">
   <mat-card>
     <mat-card-content class="mat-elevation-z10">
-      <form [formGroup]="formLogin">
+      <form [formGroup]="formLogin" (keydown.enter)="login()">
         <p>
           <img src="assets/img/logoSam.png" alt="Logotipo do sistema de apoio à manutenção." class="logotipo">
         </p>
@@ -14,7 +14,7 @@
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
           </mat-form-field>
         </p>
-        <p>                     
+        <p>
           <mat-form-field appearance="outline">
             <mat-label>Senha</mat-label>
             <input type="{{ hide ? 'text' : 'password' }}" matInput placeholder="Digite a senha" formControlName="password">
@@ -29,4 +29,4 @@
     </mat-card-content>
   </mat-card>
 </main>
-  
+

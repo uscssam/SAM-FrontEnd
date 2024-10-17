@@ -1,5 +1,12 @@
 export enum ProfileLevelEnum {
-    Atendente = 1,
-    Técnico = 2,
-    Gerente = 3
+    Employee = 1,
+    Technician = 2,
+    Manager = 3
 }
+
+export const ProfileLevelEnumDescriptions = {
+    null: '',
+    1: 'Atendente',
+    2: 'Técnico',
+    3: 'Gerente'
+};

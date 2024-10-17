@@ -1,9 +1,11 @@
+import { ProfileLevelEnum } from "../enums/profile-level.enum"
+
 export interface UserClaim {
-    sub: string
+    subject: string
     module: string
     name: string
     fullname: string
-    role: string
+    role: ProfileLevelEnum
     exp: number
     iss: string
     aud: string

@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { UserClaim } from './interfaces/user-claim';
 import { Location } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   showNav: boolean = false;
   userClaim?: UserClaim;
-  
+  isHomeRoute: boolean = false;
+
   constructor(
     private route: Router,
     private loginService: LoginService,
@@ -22,6 +24,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loginService.onTokenData.subscribe(resp => this.userClaim = resp)
+    this.route.events.pipe(
+      filter((event: NavigationEvent): event is NavigationStart => event instanceof NavigationStart)
+    ).subscribe((event: NavigationStart) => {
+      this.isHomeRoute = event.url === '/home';
+    });
   }
 
   ngAfterViewInit(): void {

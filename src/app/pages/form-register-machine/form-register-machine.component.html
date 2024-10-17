@@ -4,7 +4,8 @@
         <mat-form-field>
             <mat-label>Nome da máquina</mat-label>
             <input type="text" matInput formControlName="name" placeholder="ex: Maquina De Pega Ursinho">
-            <mat-error *ngIf="(formMachine.get('name')?.hasError('required'))">Nome da máquina é obrigatório *</mat-error>
+            <mat-error *ngIf="(formMachine.get('name')?.hasError('required'))">Nome da máquina é obrigatório
+                *</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -18,19 +19,15 @@
         <mat-form-field>
             <mat-label>Última Manutenção</mat-label>
             <input type="datetime-local" matInput formControlName="lastMaintenance" placeholder="ex: 00/00/0000 00:00">
-            <mat-error *ngIf="(formMachine.get('lastMaintenance')?.hasError('required'))">Data é obrigatório *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Manutenção Preventiva</mat-label>
-            <input type="datetime-local" matInput formControlName="preventive" placeholder="ex: 00/00/0000 00:00">
-            <mat-error *ngIf="(formMachine.get('preventive')?.hasError('required'))">Data é obrigatório *</mat-error>
+            <mat-error *ngIf="(formMachine.get('lastMaintenance')?.hasError('required'))">Data é obrigatório
+                *</mat-error>
         </mat-form-field>
 
         <div class="action-buttons">
-            <button mat-fab extended color="primary" type="button"  [disabled]="formMachine.invalid" (click)="registerMachineButton()" >Cadastrar máquina</button>
-            <button mat-fab extended type="button"  (click)="cancel()">Cancelar</button>
+            <button mat-fab extended type="button" (click)="cancel()">Cancelar</button>
+            <button mat-fab extended color="primary" type="button" [disabled]="formMachine.invalid"
+                (click)="registerMachineButton()">Cadastrar máquina</button>
         </div>
-       
+
     </form>
 </div>

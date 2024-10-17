@@ -1,68 +1,64 @@
 <main>
     <h1>Mapa de máquinas</h1>
-  
+
     <table mat-table *ngIf="listMachines.length > 0" [dataSource]="listMachines" class="mat-elevation-z8">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nome da máquina </th>
-        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
-      </ng-container>
-      
-      <ng-container matColumnDef="lastMaintenance">
-          <th mat-header-cell *matHeaderCellDef> Data da última manutenção </th>
-          <td mat-cell *matCellDef="let element"> {{ element.lastMaintenance }} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="preventive">
-        <th mat-header-cell *matHeaderCellDef> Data da manutenção preventiva </th>
-        <td mat-cell *matCellDef="let element"> {{ element.preventive }} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element; let i = index"> 
-          <button mat-icon-button aria-label="Botão para deletar máquina" (click)="deleteMachine(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button aria-label="Botão para editar máquina" (click)="editMachine(i)">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nome da máquina </th>
+            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{ getStatusDescription(element.status) }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastMaintenance">
+            <th mat-header-cell *matHeaderCellDef> Data da última manutenção </th>
+            <td mat-cell *matCellDef="let element"> {{ element.lastMaintenance }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <button mat-icon-button aria-label="Botão para deletar máquina" (click)="deleteMachine(i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="Botão para editar máquina" (click)="editMachine(i)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <div>
-      <mat-card class="example-card" appearance="outlined">
-        <img class="example-header-image" mat-card-image src="assets/img/icone-card-mapa-maquinas.jpg" alt="Figura de uma máquina de garra de parque de diversão">
-        <mat-card-content class="content-info-machine">
-          <p class="align-name-machine">Carrossel</p>
-          <div class="status-machine" [ngClass]="{ 'statusTest-true': statusTest, 'statusTest-false': !statusTest }">
-            <mat-icon class="circle-status">circle</mat-icon>
-          Ativa
-          </div>
-          Última manutenção: 10/07/2024
-          Manutenção preventiva: 10/10/2024
-        </mat-card-content>
-        <mat-card-actions class="align-btn-card">
-          <button mat-mini-fab color="primary" aria-label="Botão para deletar máquina">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-mini-fab color="primary" aria-label="Botão para editar informações da máquina">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+    <div class="machine-cards-container">
+        <div *ngFor="let machine of listMachines" class="machine-card">
+            <mat-card class="example-card" appearance="outlined">
+                <img class="example-header-image" mat-card-image src="assets/img/icone-card-mapa-maquinas.jpg"
+                    alt="Figura de uma máquina de garra de parque de diversão">
+                <mat-card-content class="content-info-machine">
+                    <p class="align-name-machine">{{ machine.name }}</p>
+                    <div class="status-machine"
+                        [ngClass]="{ 'status-active': machine.status == 1 , 'status-inactive': machine.status == 2, 'status-maintenance': machine.status ==3 }">
+                        <mat-icon class="circle-status">circle</mat-icon>
+                        {{ getStatusDescription(machine.status) }}
+                    </div>
+                    Última manutenção: {{ machine.lastMaintenance }}
+                </mat-card-content>
+                <mat-card-actions class="align-btn-card">
+                    <button mat-mini-fab color="primary" aria-label="Excluir máquina" (click)="deleteMachine(machine)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" aria-label="Editar informações da máquina"
+                        (click)="editMachine(machine)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
     </div>
-    
-  
-    <mat-spinner *ngIf="listMachines.length <= 0"></mat-spinner>
-  </main>
 
-  
+    <mat-spinner *ngIf="listMachines.length <= 0"></mat-spinner>
+</main>

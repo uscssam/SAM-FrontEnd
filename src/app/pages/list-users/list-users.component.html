@@ -1,52 +1,52 @@
 <main>
-  <h1>Lista de colaboradores</h1>
+    <h1>Lista de colaboradores</h1>
 
-  <table mat-table *ngIf="listUsers.length > 0" [dataSource]="listUsers" class="mat-elevation-z8">
-    <ng-container matColumnDef="userName">
-      <th mat-header-cell *matHeaderCellDef> Nome de usuário </th>
-      <td mat-cell *matCellDef="let element"> {{ element.userName }} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="fullname">
-      <th mat-header-cell *matHeaderCellDef> Nome completo </th>
-      <td mat-cell *matCellDef="let element"> {{ element.fullname }} </td>
-    </ng-container>
-    
-    <ng-container matColumnDef="level">
-      <th mat-header-cell *matHeaderCellDef> Cargo </th>
-      <td mat-cell *matCellDef="let element"> {{ enumLevels[element.level] }} </td>
-    </ng-container>
-    
-    <ng-container matColumnDef="speciality">
-      <th mat-header-cell *matHeaderCellDef> Especialidade </th>
-      <td mat-cell *matCellDef="let element"> {{ speciality[element.speciality] }} </td>
-    </ng-container>
-    
-    <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
-    </ng-container>
+    <table mat-table *ngIf="listUsers.length > 0" [dataSource]="listUsers" class="mat-elevation-z8">
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef> Nome de usuário </th>
+            <td mat-cell *matCellDef="let element"> {{ element.userName }} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef> Telefone </th>
-      <td mat-cell *matCellDef="let element"> {{ element.phone }} </td>
-    </ng-container>
+        <ng-container matColumnDef="fullname">
+            <th mat-header-cell *matHeaderCellDef> Nome completo </th>
+            <td mat-cell *matCellDef="let element"> {{ element.fullname }} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element; let i = index"> 
-        <button mat-icon-button aria-label="Botão para deletar o usuário" (click)="deleteUser(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button aria-label="Botão para editar o usuário" (click)="editUser(i)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef> Cargo </th>
+            <td mat-cell *matCellDef="let element"> {{ getProfileLevelDescription(element.level) }} </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <ng-container matColumnDef="speciality">
+            <th mat-header-cell *matHeaderCellDef> Especialidade </th>
+            <td mat-cell *matCellDef="let element"> {{ getSpecialityDescription(element.speciality) }} </td>
+        </ng-container>
 
-  <mat-spinner *ngIf="listUsers.length <= 0"></mat-spinner>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Telefone </th>
+            <td mat-cell *matCellDef="let element"> {{ element.phone }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="Botão para deletar o usuário" (click)="deleteUser(element)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="Botão para editar o usuário" (click)="editUser(element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-spinner *ngIf="listUsers.length <= 0"></mat-spinner>
 </main>

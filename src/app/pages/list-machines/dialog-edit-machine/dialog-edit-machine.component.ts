@@ -12,31 +12,30 @@ import { Option } from 'src/app/interfaces/option';
 import { Constants } from 'src/app/shared/constants';
 
 @Component({
-  selector: 'dialog-edit-user',
-  styleUrls: ['./dialog-edit-machine.component.scss'],
-  templateUrl: 'dialog-edit-machine.component.html',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule, FormsModule, ReactiveFormsModule, CommonModule],
+    selector: 'dialog-edit-machine',
+    styleUrls: ['./dialog-edit-machine.component.scss'],
+    templateUrl: 'dialog-edit-machine.component.html',
+    standalone: true,
+    imports: [MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule, FormsModule, ReactiveFormsModule, CommonModule],
 })
 export class DialogEditMachineComponent implements OnInit {
 
-  formMachine: FormGroup = new FormGroup({});
-  status: Option[] = Constants.Status;
-  message: string = '';
-  error: boolean = false;
+    formMachine: FormGroup = new FormGroup({});
+    status: Option[] = Constants.Status;
+    message: string = '';
+    error: boolean = false;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private data: MachineRequest
-  ) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(MAT_DIALOG_DATA) private data: MachineRequest
+    ) { }
 
-  ngOnInit(): void {
-    this.formMachine = this.formBuilder.group({
-      id: new FormControl(this.data.id),
-      name: new FormControl(this.data.name, [Validators.required]),
-      status: new FormControl(this.data.status && this.data.status.toString(), [Validators.required]),
-      lastMaintence: new FormControl(this.data.lastMaintenance, [Validators.required]),
-      preventive: new FormControl(this.data.preventive, [Validators.required]),
-    });
-  }
+    ngOnInit(): void {
+        this.formMachine = this.formBuilder.group({
+            id: new FormControl(this.data.id),
+            name: new FormControl(this.data.name, [Validators.required]),
+            status: new FormControl(this.data.status, [Validators.required]),
+            lastMaintence: new FormControl(this.data.lastMaintenance, [Validators.required]),
+        });
+    }
 }

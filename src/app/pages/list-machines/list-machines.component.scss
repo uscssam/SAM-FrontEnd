@@ -30,7 +30,7 @@ main {
     padding: 5px 12px 0px;
 }
 
-.align-name-machine{
+.align-name-machine {
     font-size: x-large;
     text-align: center;
     line-height: 0;
@@ -41,16 +41,35 @@ main {
     display: flex;
     flex-direction: row;
 
-    &.statusTest-true {
+    &.status-active {
         color: green; // Cor quando status é true
-      }
-    
-    &.statusTest-false {
-    color: red; // Cor quando status é false
+    }
+
+    &.status-inactive {
+        color: red; // Cor quando status é false
+    }
+
+    &.status-maintenance {
+        color: orange; // Cor quando status é null
     }
 }
 
 .circle-status {
     margin-right: 4px;
     margin-left: -2px;
+}
+
+.machine-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* Adjust the gap between cards as needed */
+}
+
+.machine-card {
+    box-sizing: border-box;
+}
+
+.machine-card mat-card {
+    width: 100%;
 }

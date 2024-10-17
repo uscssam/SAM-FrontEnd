@@ -1,43 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Constants } from '../shared/constants';
 import { UserResponse } from '../interfaces/user-response';
 import { UserRequest } from '../interfaces/user-request';
+import { BaseService } from './base-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends BaseService<UserRequest, UserResponse> {
 
   constructor(
-    private http: HttpClient
-  ) { }
+    protected override http: HttpClient
+  ) {
+    super(http);
+    this.url = Constants.user;
+  }
 
   getUsers(): Observable<UserResponse[]> {
-    return this.http.get<UserResponse[]>(Constants.user)
+    return this.getAll();
   }
 
   createUser(dataFormUser: UserRequest): Observable<Boolean> {
-    return this.http.post<UserResponse>(Constants.user, dataFormUser)
-      .pipe(
-        map(resp => {
-          return resp.id != null;
-        })
-      )
+    return this.create(dataFormUser);
   }
 
   updateUser(dataFormUser: UserRequest): Observable<Boolean> {
-    return this.http.put<UserResponse>(Constants.user, dataFormUser)
-      .pipe(
-        map(resp => {
-          return resp.id != null;
-        })
-      )
+    return this.update(dataFormUser);
   }
 
-  deleteUser(id: string): Observable<UserResponse> {
-    return this.http.delete<UserResponse>(`${Constants.user}?id=${id}`)
+  deleteUser(id: number): Observable<Boolean> {
+    return this.delete(id);
   }
-
 }

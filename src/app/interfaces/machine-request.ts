@@ -1,7 +1,8 @@
-export interface MachineRequest {
-    id?: number,
+import { StatusMachineEnum } from "../enums/status-machine.enum"
+import { BaseRequest } from "./base.request"
+
+export interface MachineRequest extends BaseRequest {
     name: string
-    status: Boolean,
+    status: StatusMachineEnum,
     lastMaintenance: Date
-    preventive: Date
 }

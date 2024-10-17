@@ -16,7 +16,8 @@
         <mat-form-field>
             <mat-label>Nome completo</mat-label>
             <input type="text" matInput formControlName="fullname" placeholder="Ex. Antonio Coutinho">
-            <mat-error *ngIf="(formUser.get('fullname')?.hasError('required'))">Nome completo é obrigatório *</mat-error>
+            <mat-error *ngIf="(formUser.get('fullname')?.hasError('required'))">Nome completo é obrigatório
+                *</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -29,7 +30,8 @@
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
             <mat-error
-                *ngIf="(formUser.get('email')?.hasError('email') && !formUser.get('email')?.hasError('required'))">Digite um email válido</mat-error>
+                *ngIf="(formUser.get('email')?.hasError('email') && !formUser.get('email')?.hasError('required'))">Digite
+                um email válido</mat-error>
             <mat-error *ngIf="(formUser.get('email')?.hasError('required'))">Email é obrigatório *</mat-error>
         </mat-form-field>
 
@@ -44,14 +46,17 @@
         <mat-form-field>
             <mat-label>Especialidade</mat-label>
             <mat-select formControlName="speciality">
-                <mat-option *ngFor="let speciality of specialities" [value]="speciality.code">{{speciality.label}}</mat-option>
+                <mat-option *ngFor="let speciality of specialities"
+                    [value]="speciality.code">{{speciality.label}}</mat-option>
             </mat-select>
-            <mat-error *ngIf="(formUser.get('speciality')?.hasError('required'))">Especialidade é obrigatória *</mat-error>
+            <mat-error *ngIf="(formUser.get('speciality')?.hasError('required'))">Especialidade é obrigatória
+                *</mat-error>
         </mat-form-field>
 
         <div class="action-buttons">
-            <button mat-fab extended color="primary" type="button"  [disabled]="formUser.invalid" (click)="registerUserButton()">Cadastrar usuário</button>
-            <button mat-fab extended type="button"  (click)="cancel()">Cancelar</button>
+            <button mat-fab extended type="button" (click)="cancel()">Cancelar</button>
+            <button mat-fab extended color="primary" type="button" [disabled]="formUser.invalid"
+                (click)="registerUserButton()">Cadastrar usuário</button>
         </div>
     </form>
 </div>

@@ -10,7 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  
+
   hide: boolean = false;
 
   formLogin = new FormGroup({
@@ -21,7 +21,9 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private loginService: LoginService
-  ) { }
+  ) {
+    sessionStorage.clear();
+  }
 
   hidePassword() {
       this.hide = !this.hide

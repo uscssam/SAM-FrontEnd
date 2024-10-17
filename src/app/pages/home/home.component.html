@@ -1,13 +1,13 @@
 <div class="container">
-    <mat-card class="menu" routerLink="/form-register-user">
+    <mat-card class="menu" routerLink="/form-register-user" *ngIf="level == 3" >
         <mat-card-content>
             <mat-icon>engineering</mat-icon>
             <p>Cadastro de usuário</p>
             <mat-icon>chevron_right</mat-icon>
         </mat-card-content>
     </mat-card>
-    
-    <mat-card class="menu" routerLink="/list-users">
+
+    <mat-card class="menu" routerLink="/list-users" *ngIf="level == 3">
         <mat-card-content>
             <mat-icon>group</mat-icon>
             <p>Lista de colaboradores</p>
@@ -17,15 +17,15 @@
 </div>
 
 <div class="container">
-    <mat-card class="menu" routerLink="/form-register-machine">
+    <mat-card class="menu" routerLink="/form-register-machine" *ngIf="level == 3">
         <mat-card-content>
             <mat-icon>attractions</mat-icon>
             <p>Cadastro de máquinas</p>
             <mat-icon>chevron_right</mat-icon>
         </mat-card-content>
     </mat-card>
-    
-    <mat-card class="menu" routerLink="/list-machines">
+
+    <mat-card class="menu" routerLink="/list-machines" *ngIf="level > 1">
         <mat-card-content>
             <mat-icon>location_on</mat-icon>
             <p>Mapa de máquinas</p>
@@ -42,7 +42,7 @@
             <mat-icon>chevron_right</mat-icon>
         </mat-card-content>
     </mat-card>
-    
+
     <mat-card class="menu">
         <mat-card-content>
             <mat-icon>checklist_rtl</mat-icon>
@@ -53,15 +53,15 @@
 </div>
 
 <div class="container">
-    <mat-card class="menu">
+    <mat-card class="menu" *ngIf="level == 3">
         <mat-card-content>
             <mat-icon>apartment</mat-icon>
             <p>Cadastro de unidades</p>
             <mat-icon>chevron_right</mat-icon>
         </mat-card-content>
     </mat-card>
-    
-    <mat-card class="menu">
+
+    <mat-card class="menu" *ngIf="level > 1">
         <mat-card-content>
             <mat-icon>grading</mat-icon>
             <p>Histórico de Manutenção</p>

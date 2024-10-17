@@ -1,28 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Constants } from '../shared/constants';
 import { UserRequest } from '../interfaces/user-request';
 import { UserResponse } from '../interfaces/user-response';
+import { ErrorResponse } from '../interfaces/error-response';
+import { BaseService } from './base-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormRegisterUserService {
-
-  dataForm?: UserResponse;
-
-  constructor(
-    private http: HttpClient
-  ) { }
+export class FormRegisterUserService extends  BaseService<UserRequest, UserResponse> {
 
   registerUser(dataFormUser: UserRequest): Observable<Boolean> {
-    return this.http.post<UserResponse>(Constants.user, dataFormUser)
-      .pipe(
-        map(resp => {
-          this.dataForm = resp;
-          return resp.id != null;
-        })
-      )
+    return this.create(dataFormUser);
   }
 }

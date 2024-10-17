@@ -1,20 +1,23 @@
 <div class="container">
-    <nav *ngIf="showNav">
-        <mat-toolbar color="primary">
-            <div class="left">
-                <button mat-icon-button aria-label="Botão de voltar" (click)="goBack()">
-                    <mat-icon>chevron_left</mat-icon>
-                  </button>
-                <img src="assets/img/logoSAM.svg" alt="Logotipo do sistema de apoio à manutenção." class="logoNav" routerLink="/home">
-                <span class="system-name" routerLink="/home">SAM - Sistema de Apoio à Manutenção</span>
-            </div>
-            <div class="right">
-                <span routerLink="/home">Olá, {{userClaim?.fullname}}!</span>
-            </div>
-        </mat-toolbar>
-    </nav>
-    <router-outlet></router-outlet>
-    <footer>
-        <p>Copyright © 2021-2023, SAM-APP. Todos os direitos reservados.</p>
-    </footer>
+  <nav *ngIf="showNav">
+    <mat-toolbar color="primary">
+      <div class="left">
+        <button [class.invisible]="isHomeRoute" mat-icon-button aria-label="Botão de voltar" (click)="goBack()" title="Voltar">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <img src="assets/img/logoSAM.svg" alt="Logotipo do sistema de apoio à manutenção." class="logoNav"
+          routerLink="/home">
+        <span class="system-name" routerLink="/home">SAM - Sistema de Apoio à Manutenção</span>
+      </div>
+      <div class="right">
+        Olá, {{userClaim?.fullname}} <button mat-icon-button aria-label="Botão de voltar" routerLink="login" title="Sair" >
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+  </nav>
+  <router-outlet></router-outlet>
+  <footer>
+    <p>Copyright © 2021-2023, SAM-APP. Todos os direitos reservados.</p>
+  </footer>
 </div>
