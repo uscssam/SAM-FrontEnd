@@ -12,6 +12,8 @@ export class Constants {
     static user = environment.baseUrlApi + 'User/'
     static order = environment.baseUrlApi + 'OrderService/'
     static machine = environment.baseUrlApi + 'Machine/'
+    static unit = environment.baseUrlApi + 'Unit/'
+    static cep = environment.baseCepUrl + 'ws/'
 
     static Levels = <Option[]>[
         { label: ProfileLevelEnumDescriptions[ProfileLevelEnum.Employee], code: ProfileLevelEnum.Employee },

@@ -32,6 +32,7 @@ export class FormRegisterMachineComponent implements OnInit {
     }
 
     registerMachineButton() {
+        if (this.formMachine.invalid) return;
         let requestBody = this.formMachine.value;
         this.machineService.createMachine(requestBody).subscribe({
             next: _ => {

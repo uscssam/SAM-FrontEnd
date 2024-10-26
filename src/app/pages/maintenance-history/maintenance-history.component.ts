@@ -1,33 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
 import { ProfileLevelEnum } from 'src/app/enums/profile-level.enum';
 import { StatusOrderServiceEnum, StatusOrderServiceEnumDescriptions } from 'src/app/enums/status-order-service.enum';
 import { MachineResponse } from 'src/app/interfaces/machine-response';
 import { OrderList } from 'src/app/interfaces/order-list';
-import { OrderRequest } from 'src/app/interfaces/order-request';
-import { OrderResponse } from 'src/app/interfaces/order-response';
 import { UserResponse } from 'src/app/interfaces/user-response';
 import { MachineService } from 'src/app/services/machine.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
-import { DialogEditOrderComponent } from './dialog-edit-order/dialog-edit-order.component';
 
 @Component({
-  selector: 'app-list-service-order',
-  templateUrl: './list-service-order.component.html',
-  styleUrls: ['./list-service-order.component.scss']
+  selector: 'app-maintenance-history',
+  templateUrl: './maintenance-history.component.html',
+  styleUrls: ['./maintenance-history.component.scss']
 })
-export class ListServiceOrderComponent implements OnInit {
+export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
 
-  listOrders: OrderList[] = [];
+  resultsLength = 0;
+  dataSource: MatTableDataSource<OrderList>;
   listMachines: MachineResponse[] = [];
   listTechnicians: UserResponse[] = [];
-  displayedColumns = ['description', 'status', 'opening', 'closed', 'machine', 'technician', 'action'];
+  displayedColumns = ['description', 'status', 'opening', 'closed', 'machine', 'technician'];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  
   constructor(
     private orderService: OrderService,
-    private dialog: MatDialog,
     private userService: UserService,
     private machineService: MachineService
   ) { }
@@ -47,6 +49,12 @@ export class ListServiceOrderComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe((sortChange) => {
+      console.log(sortChange);
+    });
+  }
+
   getMachine() {
     return this.machineService.getAll();
   }
@@ -58,16 +66,21 @@ export class ListServiceOrderComponent implements OnInit {
   getOrders() {
     this.orderService.getOrders().subscribe({
       next: (value) => {
-        this.listOrders = value
-        .filter(item => Number(item.status) != StatusOrderServiceEnum.Completed)
-        .map(item => {
+        this.dataSource = new MatTableDataSource(value
+          .filter(item => Number(item.status) == StatusOrderServiceEnum.Completed)
+          .map(item => {
           return <OrderList>{
             ...item,
+            status: StatusOrderServiceEnumDescriptions[item.status],
             closed: item.closed || '-',
             machine: this.listMachines.find(machine => machine.id == item.idMachine)?.name,
             technician: this.listTechnicians.find(technician => technician.id == item.idTechnician)?.fullname
           }
-        });
+        }));
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.resultsLength = value.length;
       },
       error: (err) => {
         return;
@@ -75,42 +88,13 @@ export class ListServiceOrderComponent implements OnInit {
     })
   }
 
-  delete(item: OrderResponse) {
-    const id = item.id;
-    this.orderService.deleteOrder(id).subscribe({
-      next: _ => {
-        this.getOrders();
-        alert('Ordem deletada com sucesso!')
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
-  edit(order: OrderResponse) {
-    const dialogRef = this.dialog.open(DialogEditOrderComponent, {
-      data: {
-        order,
-        machines: this.listMachines,
-        technicians: this.listTechnicians,
-      },
-      
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      result && this.okEdit(result);
-    });
-  }
-
-  okEdit(order: OrderRequest) {
-    this.orderService.update(order).subscribe({
-      next: _ => {
-        this.getOrders();
-        alert('Ordem alterada com sucesso!')
-      },
-      error: err => { }
-    });
-  }
 }
-

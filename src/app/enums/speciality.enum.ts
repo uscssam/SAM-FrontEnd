@@ -4,7 +4,7 @@ export enum SpecialityEnum {
 }
 
 export const SpecialityEnumDescriptions = {
-    null: '',
+    null: 'Não informada',
     1: 'Eletricista',
     2: 'Mecânico'
 };

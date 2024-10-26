@@ -56,19 +56,21 @@ export class FormRegisterServiceOrderComponent implements OnInit {
   }
 
   registerOrderService() {
-      let requestBody = this.formOrderService.value;
-      requestBody.status = Number(requestBody.status);
-      
-      this.orderService.createOrder(requestBody).subscribe({
-        next: _ => {
-          this.message = 'Cadastro de ordem realizado com sucesso!';
-          this.location.back();
-        },
-        error: _ => {
-          this.error = true;
-          this.message = 'Desculpe. Falha ao cadastrar ordem, tente novamente mais tarde.';
-        }
-      })
+    if (this.formOrderService.invalid) return;
+    
+    let requestBody = this.formOrderService.value;
+    requestBody.status = Number(requestBody.status);
+
+    this.orderService.createOrder(requestBody).subscribe({
+      next: _ => {
+        this.message = 'Cadastro de ordem realizado com sucesso!';
+        this.location.back();
+      },
+      error: _ => {
+        this.error = true;
+        this.message = 'Desculpe. Falha ao cadastrar ordem, tente novamente mais tarde.';
+      }
+    })
   }
 
   cancel() {

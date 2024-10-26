@@ -35,7 +35,6 @@ export class ListMachinesComponent implements OnInit {
         this.machineService.getMachines().subscribe({
             next: (value) => {
                 this.listMachines = value;
-                console.log(value);
             },
             error: (err) => {
                 return;

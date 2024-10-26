@@ -1,0 +1,49 @@
+<div class="container">
+    <h1>Cadastro de unidade</h1>
+    <form [formGroup]="formUnit">
+        <mat-form-field>
+            <mat-label>Nome da unidade</mat-label>
+            <input type="text" matInput formControlName="name" placeholder="ex: pedrosa" maxlength="50">
+            <mat-error *ngIf="(formUnit.get('name')?.hasError('required'))">Nome é obrigatório *</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>CEP</mat-label>
+            <input type="tel" matInput formControlName="cep" placeholder="Ex. 09912-000" (blur)="getCep()" (keydown.enter)="getCep()" maxlength="20">
+            <mat-error *ngIf="(formUnit.get('cep')?.hasError('required'))">CEP é obrigatório *</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Rua/ Av.</mat-label>
+            <input type="text" matInput formControlName="street" placeholder="ex: Rua das conchas!" maxlength="50">
+            <mat-error *ngIf="(formUnit.get('street')?.hasError('street'))">Rua é obrigatória *</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Número</mat-label>
+            <input type="text" matInput formControlName="number" placeholder="Ex. 12">
+            <mat-error *ngIf="(formUnit.get('number')?.hasError('required'))">Número é obrigatório
+                *</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Referência</mat-label>
+            <input type="text" matInput formControlName="neighborhood" placeholder="Ex. Próx. ao hospital" maxlength="50">
+            <mat-error *ngIf="(formUnit.get('neighborhood')?.hasError('required'))">Referênciax é obrigatório
+                *</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Telefone</mat-label>
+            <input type="text" matInput formControlName="phone" placeholder="Ex. (11) 91234-5678" maxlength="20">
+            <mat-error *ngIf="(formUnit.get('phone')?.hasError('required'))">Telefone é obrigatório
+                *</mat-error>
+        </mat-form-field>
+
+        <div class="action-buttons">
+            <button mat-fab extended type="button" (click)="cancel()">Cancelar</button>
+            <button mat-fab extended color="primary" type="button" [disabled]="formUnit.invalid"
+                (click)="registerUnitButton()">Cadastrar unidade</button>
+        </div>
+    </form>
+</div>

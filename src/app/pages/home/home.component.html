@@ -53,7 +53,7 @@
 </div>
 
 <div class="container">
-    <mat-card class="menu" *ngIf="level == 3">
+    <mat-card class="menu" *ngIf="level == 3" routerLink="/form-register-unit">
         <mat-card-content>
             <mat-icon>apartment</mat-icon>
             <p>Cadastro de unidades</p>
@@ -61,7 +61,7 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="menu" *ngIf="level > 1">
+    <mat-card class="menu" *ngIf="level > 1" routerLink="/maintenance-history">
         <mat-card-content>
             <mat-icon>grading</mat-icon>
             <p>Histórico de Manutenção</p>

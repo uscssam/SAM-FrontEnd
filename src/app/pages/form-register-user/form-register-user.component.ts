@@ -37,6 +37,7 @@ export class FormRegisterUserComponent implements OnInit {
     }
 
     registerUserButton() {
+        if (this.formUser.invalid) return;
         let requestBody = this.formUser.value;
         requestBody.level = Number(requestBody.level);
         requestBody.speciality = requestBody.speciality && Number(requestBody.speciality);

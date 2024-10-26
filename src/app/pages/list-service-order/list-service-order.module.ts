@@ -9,11 +9,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { ListServiceOrderRoutingModule } from './list-service-order-routing.module';
 import { ListServiceOrderComponent } from './list-service-order.component';
+import { DialogEditOrderComponent } from './dialog-edit-order/dialog-edit-order.component';
 
 
 @NgModule({
   declarations: [
-    ListServiceOrderComponent
+    ListServiceOrderComponent,
   ],
   imports: [
     CommonModule,

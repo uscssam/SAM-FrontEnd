@@ -47,7 +47,17 @@ const routes: Routes = [
     path: 'list-service-order',
     loadChildren: () => import('./pages/list-service-order/list-service-order.module').then(m => m.ListServiceOrderModule),
     canActivate: [roleGuard]
-  }
+  },
+  {
+    path: 'maintenance-history',
+    loadChildren: () => import('./pages/maintenance-history/maintenance-history.module').then(m => m.MaintenanceHistoryModule),
+    canActivate: [roleGuard]
+  },
+  {
+    path: 'form-register-unit',
+    loadChildren: () => import('./pages/form-register-unit/form-register-unit.module').then(m => m.FormRegisterUnitModule),
+    canActivate: [roleGuard]
+  },
 ];
 
 @NgModule({
