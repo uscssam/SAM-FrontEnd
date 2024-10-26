@@ -6,7 +6,14 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Qualquer campo" #input>
     </mat-form-field>
 
-    <div class="mat-elevation-z8">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="container-error" *ngIf="hasError">
+            Ocorreu um erro, tente novamente!.
+        </div>
+    </div>
+
+    <div class="table-container mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort matSortActive="opening" matSortDisableClear
             matSortDirection="desc">
             <ng-container matColumnDef="description">
@@ -49,6 +56,4 @@
         <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 25, 100]"
             aria-label="Selecione uma página"></mat-paginator>
     </div>
-
-    <mat-spinner *ngIf="dataSource == null"></mat-spinner>
 </main>

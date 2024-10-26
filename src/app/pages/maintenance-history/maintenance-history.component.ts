@@ -19,6 +19,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
 
+  isLoadingResults = true;
+  hasError = false;
   resultsLength = 0;
   dataSource: MatTableDataSource<OrderList>;
   listMachines: MachineResponse[] = [];
@@ -56,7 +58,7 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
   }
 
   getMachine() {
-    return this.machineService.getAll();
+    return this.machineService.getMachines();
   }
 
   getTechnician() {
@@ -64,18 +66,21 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
   }
 
   getOrders() {
-    this.orderService.getOrders().subscribe({
+    this.hasError = false;
+    this.orderService.getOrders()
+    .subscribe({
       next: (value) => {
         this.dataSource = new MatTableDataSource(value
           .filter(item => Number(item.status) == StatusOrderServiceEnum.Completed)
           .map(item => {
-          return <OrderList>{
-            ...item,
-            status: StatusOrderServiceEnumDescriptions[item.status],
-            closed: item.closed || '-',
-            machine: this.listMachines.find(machine => machine.id == item.idMachine)?.name,
-            technician: this.listTechnicians.find(technician => technician.id == item.idTechnician)?.fullname
-          }
+            this.isLoadingResults = false;
+            return <OrderList>{
+              ...item,
+              status: StatusOrderServiceEnumDescriptions[item.status],
+              closed: item.closed || '-',
+              machine: this.listMachines.find(machine => machine.id == item.idMachine)?.name,
+              technician: this.listTechnicians.find(technician => technician.id == item.idTechnician)?.fullname
+            }
         }));
 
         this.dataSource.paginator = this.paginator;
@@ -83,6 +88,7 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
         this.resultsLength = value.length;
       },
       error: (err) => {
+        this.hasError = true;
         return;
       },
     })
