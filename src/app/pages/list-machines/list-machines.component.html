@@ -20,10 +20,10 @@
         <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element; let i = index">
-                <button mat-icon-button aria-label="Botão para deletar máquina" (click)="deleteMachine(i)">
+                <button mat-icon-button aria-label="Botão para deletar máquina" (click)="deleteMachine(element)">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <button mat-icon-button aria-label="Botão para editar máquina" (click)="editMachine(i)">
+                <button mat-icon-button aria-label="Botão para editar máquina" (click)="editMachine(element)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>

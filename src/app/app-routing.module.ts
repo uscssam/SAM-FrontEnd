@@ -38,6 +38,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/list-machines/list-machines.module').then(m => m.ListMachinesModule),
     canActivate: [roleGuard]
   },
+  {
+    path: 'form-register-service-order',
+    loadChildren: () => import('./pages/form-register-service-order/form-register-service-order.module').then(m => m.FormRegisterServiceOrderModule),
+    canActivate: [roleGuard]
+  },
+  {
+    path: 'list-service-order',
+    loadChildren: () => import('./pages/list-service-order/list-service-order.module').then(m => m.ListServiceOrderModule),
+    canActivate: [roleGuard]
+  }
 ];
 
 @NgModule({

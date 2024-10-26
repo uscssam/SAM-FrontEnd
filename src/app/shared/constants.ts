@@ -3,12 +3,14 @@ import { Option } from "../interfaces/option";
 import { ProfileLevelEnum, ProfileLevelEnumDescriptions } from "../enums/profile-level.enum";
 import { SpecialityEnum, SpecialityEnumDescriptions } from "../enums/speciality.enum";
 import { StatusMachineEnum, StatusMachineEnumDescriptions } from "../enums/status-machine.enum";
+import { StatusOrderServiceEnum, StatusOrderServiceEnumDescriptions } from "../enums/status-order-service.enum";
 
 export class Constants {
     constructor() { }
 
     static login = environment.baseUrlApi + 'Login/';
     static user = environment.baseUrlApi + 'User/'
+    static order = environment.baseUrlApi + 'OrderService/'
     static machine = environment.baseUrlApi + 'Machine/'
 
     static Levels = <Option[]>[
@@ -25,5 +27,11 @@ export class Constants {
         { label: StatusMachineEnumDescriptions[StatusMachineEnum.Active], code: StatusMachineEnum.Active },
         { label: StatusMachineEnumDescriptions[StatusMachineEnum.Inactive], code: StatusMachineEnum.Inactive },
         { label: StatusMachineEnumDescriptions[StatusMachineEnum.Maintenance], code: StatusMachineEnum.Maintenance },
+    ]
+    static StatusOrderService = <Option[]>[
+        { label: StatusOrderServiceEnumDescriptions[StatusOrderServiceEnum.Open], code: StatusOrderServiceEnum.Open },
+        { label: StatusOrderServiceEnumDescriptions[StatusOrderServiceEnum.InProgress], code: StatusOrderServiceEnum.InProgress },
+        { label: StatusOrderServiceEnumDescriptions[StatusOrderServiceEnum.Impeded], code: StatusOrderServiceEnum.Impeded },
+        { label: StatusOrderServiceEnumDescriptions[StatusOrderServiceEnum.Completed], code: StatusOrderServiceEnum.Completed },
     ]
 }

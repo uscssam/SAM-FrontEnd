@@ -9,4 +9,5 @@ export interface UserClaim {
     exp: number
     iss: string
     aud: string
+    idUser: string
 }
