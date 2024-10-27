@@ -13,7 +13,8 @@
                         <mat-icon class="circle-status">circle</mat-icon>
                         {{ getStatusDescription(machine.status) }}
                     </div>
-                    Última manutenção: {{ machine.lastMaintenance }}
+                    <div *ngIf="machine.lastMaintenance">Última manutenção: {{ machine.lastMaintenance }}</div>
+                    <div *ngIf="machine.unit">Unidade: {{ machine.unit }}</div>
                 </mat-card-content>
                 <mat-card-actions class="align-btn-card">
                     <button mat-mini-fab color="primary" aria-label="Excluir máquina" (click)="deleteMachine(machine)">

@@ -12,6 +12,8 @@ import { MachineService } from 'src/app/services/machine.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { DialogEditOrderComponent } from './dialog-edit-order/dialog-edit-order.component';
+import { UnitService } from 'src/app/services/unit.service';
+import { UnitResponse } from 'src/app/interfaces/unit-response';
 
 @Component({
   selector: 'app-list-service-order',
@@ -23,13 +25,15 @@ export class ListServiceOrderComponent implements OnInit {
   listOrders: OrderList[] = [];
   listMachines: MachineResponse[] = [];
   listTechnicians: UserResponse[] = [];
-  displayedColumns = ['description', 'status', 'opening', 'closed', 'machine', 'technician', 'action'];
+  listUnits: UnitResponse[] = [];
+  displayedColumns = ['description', 'status', 'opening', 'closed', 'machine', 'technician','unit','action'];
 
   constructor(
     private orderService: OrderService,
     private dialog: MatDialog,
     private userService: UserService,
-    private machineService: MachineService
+    private machineService: MachineService,
+    private unitService: UnitService
   ) { }
 
   getStatusDescription(status: StatusOrderServiceEnum): string {
@@ -37,14 +41,20 @@ export class ListServiceOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getLists();
+  }
+
+  getLists() {
     forkJoin(
       this.getMachine(),
-      this.getTechnician()
+      this.getTechnician(),
+      this.getUnits()
     ).subscribe(resp => {
       this.listMachines = resp[0];
       this.listTechnicians = resp[1].filter(item => item.level == ProfileLevelEnum.Technician);
+      this.listUnits = resp[2];
       this.getOrders();
-    })
+    });
   }
 
   getMachine() {
@@ -55,16 +65,22 @@ export class ListServiceOrderComponent implements OnInit {
     return this.userService.getAll();
   }
 
+  getUnits(){
+    return this.unitService.getAll();
+  }
+
   getOrders() {
     this.orderService.getOrders().subscribe({
       next: (value) => {
         this.listOrders = value
         .filter(item => Number(item.status) != StatusOrderServiceEnum.Completed)
         .map(item => {
+          const machine = this.listMachines.find(machine => machine.id == item.idMachine);
           return <OrderList>{
             ...item,
             closed: item.closed || '-',
-            machine: this.listMachines.find(machine => machine.id == item.idMachine)?.name,
+            machine: machine?.name,
+            unit: this.listUnits.find(unit => machine?.idUnit == unit.id)?.name,
             technician: this.listTechnicians.find(technician => technician.id == item.idTechnician)?.fullname
           }
         });
@@ -79,7 +95,7 @@ export class ListServiceOrderComponent implements OnInit {
     const id = item.id;
     this.orderService.deleteOrder(id).subscribe({
       next: _ => {
-        this.getOrders();
+        this.getLists();
         alert('Ordem deletada com sucesso!')
       },
       error: err => {
@@ -106,7 +122,7 @@ export class ListServiceOrderComponent implements OnInit {
   okEdit(order: OrderRequest) {
     this.orderService.update(order).subscribe({
       next: _ => {
-        this.getOrders();
+        this.getLists();
         alert('Ordem alterada com sucesso!')
       },
       error: err => { }

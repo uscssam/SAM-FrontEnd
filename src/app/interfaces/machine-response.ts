@@ -3,6 +3,8 @@ import { BaseResponse } from "./base-response"
 
 export interface MachineResponse extends BaseResponse {
     name: string
-    status: StatusMachineEnum,
+    status: StatusMachineEnum
     lastMaintenance: Date
+    idUnit: number
+    unit: string
 }
