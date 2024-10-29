@@ -10,6 +10,7 @@ import { Constants } from 'src/app/shared/constants';
 import { MachineRequest } from 'src/app/interfaces/machine-request';
 import { StatusMachineEnum } from 'src/app/enums/status-machine.enum';
 import { LoginService } from 'src/app/services/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-register-service-order',
@@ -47,8 +48,13 @@ export class FormRegisterServiceOrderComponent implements OnInit {
       .subscribe(machines => {
 
         if (machines.length == 0) {
-          this.message = 'Não há máquinas cadastradas para realizar o cadastro de ordem de serviço.';
-          this.location.back();
+          Swal.fire({
+            icon: 'info',
+            text: 'Não há máquinas disponíveis para realizar o cadastro de ordem de serviço.',
+          }).then(() => {
+            this.location.back();
+          }
+          );
         }
 
         this.machines = machines

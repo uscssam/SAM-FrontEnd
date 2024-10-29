@@ -85,7 +85,6 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(value
           .filter(item => Number(item.status) == StatusOrderServiceEnum.Completed)
           .map(item => {
-            this.isLoadingResults = false;
             return <OrderList>{
               ...item,
               status: StatusOrderServiceEnumDescriptions[Number(item.status)],
@@ -95,6 +94,7 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
             }
         }));
 
+        this.isLoadingResults = false;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.resultsLength = value.length;

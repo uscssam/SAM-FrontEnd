@@ -65,5 +65,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-spinner *ngIf="listOrders.length <= 0"></mat-spinner>
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 </main>

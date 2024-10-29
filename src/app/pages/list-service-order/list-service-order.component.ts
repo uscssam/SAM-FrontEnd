@@ -18,7 +18,6 @@ import { UserRequest } from 'src/app/interfaces/user-request';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 
 
 @Component({
@@ -28,6 +27,7 @@ import { Location } from '@angular/common';
 })
 export class ListServiceOrderComponent implements OnInit {
 
+  isLoadingResults = true;
   listOrders: OrderList[] = [];
   listMachines: MachineResponse[] = [];
   listTechnicians: UserResponse[] = [];
@@ -36,6 +36,7 @@ export class ListServiceOrderComponent implements OnInit {
   title: string = 'Ordens em aberto';
   orderServiceStatus?: StatusOrderServiceEnum;
   level: ProfileLevelEnum;
+  idUser: number;
 
   constructor(
     private orderService: OrderService,
@@ -51,6 +52,7 @@ export class ListServiceOrderComponent implements OnInit {
     this.loginService.onTokenData.subscribe(resp => {
       if (resp && resp.role) {
         this.level = ProfileLevelEnum[resp.role as unknown as keyof typeof ProfileLevelEnum];
+        this.idUser = Number(resp.idUser);
       }
     });
 
@@ -123,6 +125,7 @@ export class ListServiceOrderComponent implements OnInit {
     else if (this.orderServiceStatus == undefined && this.level == ProfileLevelEnum.Technician) {
       orderRequest = { idTechnician: this.loginService.idUser, status: -4 };
     }
+    this.isLoadingResults = true;
     this.orderService.search(orderRequest).subscribe({
       next: (value) => {
         this.listOrders = value
@@ -137,10 +140,11 @@ export class ListServiceOrderComponent implements OnInit {
               technician: this.listTechnicians.find(technician => technician.id == item.idTechnician)?.fullname ?? ''
             }
           });
+          this.isLoadingResults = false;
           if (this.listOrders.length == 0) {
             Swal.fire({
               icon: 'info',
-              text: 'Não há ordens de serviço para exibir',
+              text: 'Não há ordens de serviço para exibir.',
               confirmButtonText: 'Ok'
             }).then(() => {
               this.router.navigate(['/home']);
@@ -211,10 +215,9 @@ export class ListServiceOrderComponent implements OnInit {
       allowOutsideClick: false,
     }).then(result => {
       if (result.isConfirmed) {
-        var request: OrderRequest = { id: order.id, idTechnician: 1 };
+        var request: OrderRequest = { id: order.id, idTechnician: this.idUser };
         this.orderService.updateOrder(request).subscribe({
           next: _ => {
-            this.getLists();
             Swal.fire({
               text: `Ordem de serviço nº ${order.id} atribuída com sucesso!`,
               icon: 'success',
