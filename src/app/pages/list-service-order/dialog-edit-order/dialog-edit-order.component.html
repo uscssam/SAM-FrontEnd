@@ -1,32 +1,6 @@
 <mat-dialog-content class="mat-typography">
-    <h2>Ordem à ser alterada:</h2>
+    <h2>Atribuir técnico:</h2>
     <form [formGroup]="formOrderService">
-        <mat-form-field>
-            <mat-label>Descrição do problema</mat-label>
-            <input type="text" matInput formControlName="description" placeholder="ex: máquina não liga">
-            <mat-error *ngIf="(formOrderService.get('description')?.hasError('required'))">Descrição é obrigatória *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Status da Ordem</mat-label>
-            <mat-select formControlName="status">
-                <mat-option *ngFor="let item of statusOrder" [value]="item.code">{{item.label}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formOrderService.get('item')?.hasError('required'))">Status é obrigatório *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Data de fechamento</mat-label>
-            <input type="datetime-local" matInput formControlName="closed" placeholder="ex: 00/00/0000 00:00">
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Máquina</mat-label>
-            <mat-select formControlName="idMachine">
-                <mat-option *ngFor="let item of machines" [value]="item.id">{{item.name}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formOrderService.get('item')?.hasError('required'))">Máquina é obrigatório *</mat-error>
-        </mat-form-field>
 
         <mat-form-field>
             <mat-label>Técnico</mat-label>
@@ -41,5 +15,5 @@
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancelar</button>
     <button mat-button [mat-dialog-close]="formOrderService.value" cdkFocusInitial
-        [disabled]="formOrderService.invalid">Alterar</button>
+        [disabled]="formOrderService.invalid">Atribuir</button>
 </mat-dialog-actions>

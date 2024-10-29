@@ -64,11 +64,12 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    /* Adjust the gap between cards as needed */
+    justify-content: center;
 }
 
 .machine-card {
     box-sizing: border-box;
+    min-width: 260px;
 }
 
 .machine-card mat-card {

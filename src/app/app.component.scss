@@ -6,6 +6,10 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    position: fixed;
+    top: 0px;
+    bottom: 40px;
+    overflow: auto;
 }
 
 .invisible {
@@ -18,6 +22,8 @@
 
 footer p {
     text-align: center;
+    font-size: small;
+    color: gray;
 }
 
 .logoNav {

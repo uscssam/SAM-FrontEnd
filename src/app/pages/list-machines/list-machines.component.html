@@ -1,33 +1,41 @@
 <main>
-    <h1>Mapa de máquinas</h1>
+  <h1>Mapa de máquinas</h1>
 
-    <div class="machine-cards-container">
-        <div *ngFor="let machine of listMachines" class="machine-card">
-            <mat-card class="example-card" appearance="outlined">
-                <img class="example-header-image" mat-card-image src="assets/img/icone-card-mapa-maquinas.jpg"
-                    alt="Figura de uma máquina de garra de parque de diversão">
-                <mat-card-content class="content-info-machine">
-                    <p class="align-name-machine">{{ machine.name }}</p>
-                    <div class="status-machine"
-                        [ngClass]="{ 'status-active': machine.status == 1 , 'status-inactive': machine.status == 2, 'status-maintenance': machine.status ==3 }">
-                        <mat-icon class="circle-status">circle</mat-icon>
-                        {{ getStatusDescription(machine.status) }}
-                    </div>
-                    <div *ngIf="machine.lastMaintenance">Última manutenção: {{ machine.lastMaintenance }}</div>
-                    <div *ngIf="machine.unit">Unidade: {{ machine.unit }}</div>
-                </mat-card-content>
-                <mat-card-actions class="align-btn-card">
-                    <button mat-mini-fab color="primary" aria-label="Excluir máquina" (click)="deleteMachine(machine)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                    <button mat-mini-fab color="primary" aria-label="Editar informações da máquina"
-                        (click)="editMachine(machine)">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
+  <mat-form-field>
+    <mat-label>Unidade da máquina</mat-label>
+    <mat-select [value]="0" (selectionChange)="onSelectionChange($event)" >
+      <mat-option *ngFor="let unit of lisUnits" [value]="unit.id" >{{unit.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="machine-cards-container">
+    <div *ngFor="let machine of listMachines" class="machine-card">
+      <mat-card class="example-card" appearance="outlined">
+        <img class="example-header-image" mat-card-image src="assets/img/icone-card-mapa-maquinas-2.jpg"
+          alt="Figura de uma máquina de garra de parque de diversão">
+        <mat-card-content class="content-info-machine">
+          <p class="align-name-machine">{{ machine.name }}</p>
+          <div class="status-machine"
+            [ngClass]="{ 'status-active': machine.status == 1 , 'status-inactive': machine.status == 2, 'status-maintenance': machine.status ==3 }">
+            <mat-icon class="circle-status">circle</mat-icon>
+            {{ getStatusDescription(machine.status) }}
+          </div>
+          <div *ngIf="machine.unit">Unidade: {{ machine.unit }}</div>
+          <div *ngIf="machine.lastMaintenance">Última manutenção: {{ machine.lastMaintenance | date:'dd/MM/yyyy' }}
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="align-btn-card" *ngIf="level == 3">
+          <button mat-mini-fab color="primary" aria-label="Excluir máquina" (click)="deleteMachine(machine)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-mini-fab color="primary" aria-label="Editar informações da máquina"
+            (click)="editMachine(machine)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
+  </div>
 
-    <mat-spinner *ngIf="listMachines.length <= 0"></mat-spinner>
+  <mat-spinner *ngIf="listMachines.length <= 0"></mat-spinner>
 </main>

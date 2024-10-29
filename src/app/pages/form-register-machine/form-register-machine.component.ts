@@ -7,6 +7,7 @@ import { UnitResponse } from 'src/app/interfaces/unit-response';
 import { MachineService } from 'src/app/services/machine.service';
 import { UnitService } from 'src/app/services/unit.service';
 import { Constants } from 'src/app/shared/constants';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-form',
@@ -18,8 +19,6 @@ export class FormRegisterMachineComponent implements OnInit {
     formMachine: FormGroup = new FormGroup({});
     status: Option[] = Constants.Status;
     units: UnitResponse[] = [];
-    message: string = '';
-    error: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -35,8 +34,6 @@ export class FormRegisterMachineComponent implements OnInit {
 
         this.formMachine = this.formBuilder.group({
             name: new FormControl(null, [Validators.required]),
-            status: new FormControl(null, [Validators.required]),
-            lastMaintenance: new FormControl(null, [Validators.required]),
             idUnit: new FormControl(null, [Validators.required])
         });
     }
@@ -44,16 +41,20 @@ export class FormRegisterMachineComponent implements OnInit {
     registerMachineButton() {
         if (this.formMachine.invalid) return;
         let machine = <MachineRequest>this.formMachine.value;
-        machine.lastMaintenance = `${machine.lastMaintenance}:00`;
-        let requestBody = this.formMachine.value;
-        this.machineService.createMachine(requestBody).subscribe({
+        this.machineService.createMachine(machine).subscribe({
             next: _ => {
-                this.message = 'Cadastro realizado com sucesso!';
-                this.location.back();
+              Swal.fire({
+                text: `Máquina ${machine.name} cadastrada com sucesso!`,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.location.back();
+                }
+              })
             },
             error: _ => {
-                this.error = true;
-                this.message = 'Desculpe. Falha ao cadastrar, tente novamente mais tarde.';
+              this.location.back();
             }
         })
     }

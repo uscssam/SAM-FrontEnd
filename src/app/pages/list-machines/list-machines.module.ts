@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatSelectModule
   ]
 })
 export class ListMachinesModule { }

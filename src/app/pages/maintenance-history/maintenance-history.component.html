@@ -28,12 +28,12 @@
 
             <ng-container matColumnDef="opening">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de abertura </th>
-                <td mat-cell *matCellDef="let element"> {{ element.opening }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.opening | date: "dd/MM/yyyy HH:mm" }} </td>
             </ng-container>
 
             <ng-container matColumnDef="closed">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de fechamento </th>
-                <td mat-cell *matCellDef="let element"> {{ element.closed }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.closed | date: "dd/MM/yyyy HH:mm" }} </td>
             </ng-container>
 
             <ng-container matColumnDef="technician">

@@ -8,26 +8,6 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Status da Ordem</mat-label>
-            <mat-select formControlName="status">
-                <mat-option *ngFor="let item of statusOrder" [value]="item.code">{{item.label}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formOrderService.get('item')?.hasError('required'))">Status é obrigatório *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Data de abertura</mat-label>
-            <input type="datetime-local" matInput formControlName="opening" placeholder="ex: 00/00/0000 00:00">
-            <mat-error *ngIf="(formOrderService.get('opening')?.hasError('required'))">Data é obrigatório
-                *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Data de fechamento</mat-label>
-            <input type="datetime-local" matInput formControlName="closed" placeholder="ex: 00/00/0000 00:00">
-        </mat-form-field>
-
-        <mat-form-field>
             <mat-label>Máquina</mat-label>
             <mat-select formControlName="idMachine">
                 <mat-option *ngFor="let item of machines" [value]="item.id">{{item.name}}</mat-option>
@@ -35,7 +15,7 @@
             <mat-error *ngIf="(formOrderService.get('item')?.hasError('required'))">Máquina é obrigatório *</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field *ngIf="level > 1">
             <mat-label>Técnico</mat-label>
             <mat-select formControlName="idTechnician">
                 <mat-option *ngFor="let item of technicians" [value]="item.id">{{item.fullname}}</mat-option>

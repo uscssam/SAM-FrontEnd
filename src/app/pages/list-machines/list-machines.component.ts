@@ -8,6 +8,10 @@ import { DialogEditMachineComponent } from './dialog-edit-machine/dialog-edit-ma
 import { UnitResponse } from 'src/app/interfaces/unit-response';
 import { UnitService } from 'src/app/services/unit.service';
 import { forkJoin } from 'rxjs';
+import Swal from 'sweetalert2';
+import { ProfileLevelEnum } from 'src/app/enums/profile-level.enum';
+import { LoginService } from 'src/app/services/login.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
     selector: 'app-list-machines',
@@ -19,32 +23,52 @@ export class ListMachinesComponent implements OnInit {
 
     listMachines: MachineResponse[] = [];
     lisUnits: UnitResponse[] = [];
+    level: ProfileLevelEnum;
 
     constructor(
         private dialog: MatDialog,
         private machineService: MachineService,
-        private unitService: UnitService
-    ) { }
+        private unitService: UnitService,
+        private loginService: LoginService
+    ) {
+      this.level = loginService.userLevel;
+    }
 
-    
-    ngOnInit() { 
+    onSelectionChange(event: MatSelectChange) {
+        if(event.value == 0) {
+            this.getLists();
+        } else {
+            this.machineService.search({ idUnit: event.value }).subscribe(resp => {
+                this.listMachines = resp.map(machine => {
+                    return <any>{
+                        ...machine,
+                        unit: this.lisUnits.find(unit => machine.idUnit == unit.id)?.name
+                    }
+                });
+            });
+        }
+    }
+
+    ngOnInit() {
         this.getLists();
     }
 
     getLists() {
-        forkJoin(
+        forkJoin([
             this.getMachines(),
             this.getUnits()
-        ).subscribe(resp => {
+        ]).subscribe(resp => {
             this.listMachines = resp[0].map(machine => {
                 return <any>{
                     ...machine,
                     unit: resp[1].find(unit => machine.idUnit == unit.id)?.name
                 }
             });
+            this.lisUnits = resp[1];
+            this.lisUnits.unshift({ id: 0, name: '[Todas]' });
         })
     }
-    
+
     getStatusDescription(status: StatusMachineEnum): string {
         return StatusMachineEnumDescriptions[status];
     }
@@ -58,17 +82,32 @@ export class ListMachinesComponent implements OnInit {
     }
 
     deleteMachine(machine: MachineResponse) {
-        const id = machine.id;
-        this.machineService.deleteMachine(id).subscribe({
-            next: _ => {
-                this.getLists();
-                alert('Máquina deletada com sucesso!')
-            },
-            error: err => {
-                console.log(err);
-
-            }
-        });
+      Swal.fire({
+        text: `Excluir a máquina "${machine.name}"?"`,
+        icon: 'question',
+        showDenyButton: true,
+        confirmButtonText: 'Sim',
+        denyButtonText: 'Não',
+        allowOutsideClick: false,
+      }).then(result => {
+        if(result.isConfirmed) {
+          const id = machine.id;
+          this.machineService.deleteMachine(id).subscribe({
+              next: _ => {
+                  this.getLists();
+                  Swal.fire({
+                      text: `Máquina "${machine.name}" excluída com sucesso!`,
+                      icon: 'success',
+                      confirmButtonText: 'OK',
+                      allowOutsideClick: false,
+                  });
+              },
+              error: err => {
+                  console.log(err);
+              }
+          });
+        }
+      });
     }
 
     editMachine(machine: MachineResponse) {

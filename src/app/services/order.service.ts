@@ -5,8 +5,8 @@ import { OrderRequest } from '../interfaces/order-request';
 import { OrderResponse } from '../interfaces/order-response';
 import { Constants } from '../shared/constants';
 import { BaseService } from './base-service';
-import { OrderGetResponse } from '../interfaces/order-response-get';
 import { ErrorResponse } from '../interfaces/error-response';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,15 @@ import { ErrorResponse } from '../interfaces/error-response';
 export class OrderService extends BaseService<OrderRequest, OrderResponse> {
 
   constructor(
-    protected override http: HttpClient
+    protected override http: HttpClient,
+    protected override router: Router
   ) {
-    super(http);
+    super(http, router);
     this.url = Constants.order;
   }
 
-  getOrders(): Observable<OrderGetResponse[]> {
-    return this.http.get<OrderGetResponse[]>(this.url)
+  getOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(this.url)
     .pipe(
       map(resp => {
           return resp;

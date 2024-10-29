@@ -43,7 +43,7 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="menu" routerLink="/list-service-order">
+    <mat-card class="menu" [routerLink]="['/list-service-order', { orderServiceStatus: 1 }]">
         <mat-card-content>
             <mat-icon>checklist_rtl</mat-icon>
             <p>Ordens em aberto</p>
@@ -60,6 +60,14 @@
             <mat-icon>chevron_right</mat-icon>
         </mat-card-content>
     </mat-card>
+
+    <mat-card class="menu" *ngIf="level == 2" [routerLink]="['/list-service-order', { orderServiceStatus: null }]">
+      <mat-card-content>
+        <mat-icon>manage_search</mat-icon>
+        <p>Minhas ordens</p>
+        <mat-icon>chevron_right</mat-icon>
+    </mat-card-content>
+  </mat-card>
 
     <mat-card class="menu" *ngIf="level > 1" routerLink="/maintenance-history">
         <mat-card-content>

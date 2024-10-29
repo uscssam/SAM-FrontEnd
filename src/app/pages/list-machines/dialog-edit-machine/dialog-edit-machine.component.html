@@ -6,21 +6,6 @@
             <input type="text" matInput formControlName="name" placeholder="ex: Carrossel">
             <mat-error *ngIf="(formMachine.get('name')?.hasError('required'))">Nome é obrigatório *</mat-error>
         </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Status</mat-label>
-            <mat-select formControlName="status">
-                <mat-option *ngFor="let status of status" [value]="status.code">{{status.label}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formMachine.get('status')?.hasError('required'))">Status é obrigatório *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Data da última manutenção</mat-label>
-            <input type="datetime-local" matInput formControlName="lastMaintence" placeholder="Ex. 00/00/0000 00:00">
-            <mat-error *ngIf="(formMachine.get('fullname')?.hasError('lastMaintence'))">Data é obrigatório *</mat-error>
-        </mat-form-field>
-
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

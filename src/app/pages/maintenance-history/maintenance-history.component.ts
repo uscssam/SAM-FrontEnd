@@ -7,7 +7,9 @@ import { ProfileLevelEnum } from 'src/app/enums/profile-level.enum';
 import { StatusOrderServiceEnum, StatusOrderServiceEnumDescriptions } from 'src/app/enums/status-order-service.enum';
 import { MachineResponse } from 'src/app/interfaces/machine-response';
 import { OrderList } from 'src/app/interfaces/order-list';
+import { OrderRequest } from 'src/app/interfaces/order-request';
 import { UserResponse } from 'src/app/interfaces/user-response';
+import { LoginService } from 'src/app/services/login.service';
 import { MachineService } from 'src/app/services/machine.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
@@ -26,25 +28,31 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
   listMachines: MachineResponse[] = [];
   listTechnicians: UserResponse[] = [];
   displayedColumns = ['description', 'status', 'opening', 'closed', 'machine', 'technician'];
+  level: ProfileLevelEnum;
+  idUser: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
+
   constructor(
     private orderService: OrderService,
     private userService: UserService,
-    private machineService: MachineService
-  ) { }
+    private machineService: MachineService,
+    private loginService: LoginService
+  ) {
+    this.level = loginService.userLevel;
+    this.idUser = loginService.idUser;
+  }
 
   getStatusDescription(status: StatusOrderServiceEnum): string {
     return StatusOrderServiceEnumDescriptions[status] || '-';
   }
 
   ngOnInit() {
-    forkJoin(
+    forkJoin([
       this.getMachine(),
       this.getTechnician()
-    ).subscribe(resp => {
+    ]).subscribe(resp => {
       this.listMachines = resp[0];
       this.listTechnicians = resp[1].filter(item => item.level == ProfileLevelEnum.Technician);
       this.getOrders();
@@ -67,7 +75,11 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
 
   getOrders() {
     this.hasError = false;
-    this.orderService.getOrders()
+    var orderRequest: OrderRequest = { status: StatusOrderServiceEnum.Completed };
+    if(this.level == ProfileLevelEnum.Technician) {
+      orderRequest.idTechnician = this.idUser;
+    }
+    this.orderService.search(orderRequest)
     .subscribe({
       next: (value) => {
         this.dataSource = new MatTableDataSource(value
@@ -76,7 +88,7 @@ export class MaintenanceHistoryComponent implements OnInit, AfterViewInit {
             this.isLoadingResults = false;
             return <OrderList>{
               ...item,
-              status: StatusOrderServiceEnumDescriptions[item.status],
+              status: StatusOrderServiceEnumDescriptions[Number(item.status)],
               closed: item.closed || '-',
               machine: this.listMachines.find(machine => machine.id == item.idMachine)?.name,
               technician: this.listTechnicians.find(technician => technician.id == item.idTechnician)?.fullname

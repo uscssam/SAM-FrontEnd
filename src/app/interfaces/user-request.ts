@@ -3,11 +3,11 @@ import { SpecialityEnum } from '../enums/speciality.enum'
 import { BaseRequest } from './base.request'
 
 export interface UserRequest extends BaseRequest {
-    userName: string
+    userName?: string
     password?: string
-    fullname: string
-    email: string
-    phone: string
-    level: ProfileLevelEnum
-    speciality: SpecialityEnum
+    fullname?: string
+    email?: string
+    phone?: string
+    level?: ProfileLevelEnum
+    speciality?: SpecialityEnum
 }

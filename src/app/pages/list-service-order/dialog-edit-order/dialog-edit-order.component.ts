@@ -32,7 +32,7 @@ export class DialogEditOrderComponent implements OnInit {
         private formBuilder: FormBuilder,
         private loginService: LoginService,
         @Inject(MAT_DIALOG_DATA) protected data: any,
-        
+
     ) {
       this.machines = data.machines;
       this.technicians = data.technicians;
@@ -44,13 +44,7 @@ export class DialogEditOrderComponent implements OnInit {
   ngOnInit(): void {
     this.formOrderService = this.formBuilder.group({
       id: new FormControl(this.data.order.id, []),
-      description: new FormControl(this.data.order.description, [Validators.required]),
-      status: new FormControl(this.data.order.status),
-      opening: new FormControl(this.data.order.opening, []),
-      closed: new FormControl(this.data.order.closed, []),
-      idMachine: new FormControl(this.data.order.idMachine, [Validators.required]),
       idTechnician: new FormControl(this.data.order.idTechnician, [Validators.required]),
-      createdBy: new FormControl(this.data.order.createdBy, [])
     });
   }
 }

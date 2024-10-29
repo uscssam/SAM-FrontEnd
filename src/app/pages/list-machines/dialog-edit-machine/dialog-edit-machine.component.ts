@@ -34,8 +34,7 @@ export class DialogEditMachineComponent implements OnInit {
         this.formMachine = this.formBuilder.group({
             id: new FormControl(this.data.id),
             name: new FormControl(this.data.name, [Validators.required]),
-            status: new FormControl(this.data.status, [Validators.required]),
-            lastMaintence: new FormControl(this.data.lastMaintenance, [Validators.required]),
+            idUnit: new FormControl(this.data.idUnit)
         });
     }
 }

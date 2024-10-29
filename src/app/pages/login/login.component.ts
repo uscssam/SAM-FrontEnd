@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/interfaces/login-request';
 import { LoginService } from 'src/app/services/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,11 @@ export class LoginComponent {
         this.router.navigate(['home']);
       },
       error: (err) => {
-        console.log('Erro no login', err)
+        const errorMessage = err?.message || 'Ocorreu um erro inesperado. Por favor tente novamente mais tarde';
+        Swal.fire({
+          icon: 'error',
+          text: errorMessage
+        })
       }
     })
   }

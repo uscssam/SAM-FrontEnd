@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileLevelEnum } from 'src/app/enums/profile-level.enum';
 import { Option } from 'src/app/interfaces/option';
-import { LoginService } from 'src/app/services/login.service';
 import { MachineService } from 'src/app/services/machine.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { Constants } from 'src/app/shared/constants';
+import { MachineRequest } from 'src/app/interfaces/machine-request';
+import { StatusMachineEnum } from 'src/app/enums/status-machine.enum';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-form-register-service-order',
@@ -22,42 +24,50 @@ export class FormRegisterServiceOrderComponent implements OnInit {
   technicians: any[] = [];
   message: string = '';
   error: boolean = false;
-  idUser?: string;
+  level: ProfileLevelEnum;
 
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private loginService: LoginService,
     private machineService: MachineService,
     private userService: UserService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private loginService: LoginService
   ) {
     this.loginService.onTokenData.subscribe(resp => {
-      this.idUser = resp?.idUser;
+      if (resp && resp.role) {
+        this.level = ProfileLevelEnum[resp.role as unknown as keyof typeof ProfileLevelEnum];
+      }
     });
   }
 
   ngOnInit(): void {
-    this.machineService.getMachines()
-      .subscribe(machines => this.machines = machines);
+    var machineRequest: MachineRequest = { status: StatusMachineEnum.Active };
+    this.machineService.search(machineRequest)
+      .subscribe(machines => {
+
+        if (machines.length == 0) {
+          this.message = 'Não há máquinas cadastradas para realizar o cadastro de ordem de serviço.';
+          this.location.back();
+        }
+
+        this.machines = machines
+      });
 
     this.userService.getUsers()
       .subscribe(users => this.technicians = users.filter(user => user.level == ProfileLevelEnum.Technician))
 
     this.formOrderService = this.formBuilder.group({
       description: new FormControl(null, [Validators.required]),
-      status: new FormControl(null),
-      opening: new FormControl(null, [Validators.required]),
-      closed: new FormControl(null, []),
       idMachine: new FormControl(null, [Validators.required]),
-      idTechnician: new FormControl(null, [Validators.required]),
-      createdBy: new FormControl(Number(this.idUser), [])
+      idTechnician: new FormControl(null, []),
     });
+
   }
 
   registerOrderService() {
     if (this.formOrderService.invalid) return;
-    
+
     let requestBody = this.formOrderService.value;
     requestBody.status = Number(requestBody.status);
 

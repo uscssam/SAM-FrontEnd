@@ -5,6 +5,7 @@ import { UnitRequest } from '../interfaces/unit-request';
 import { UnitResponse } from '../interfaces/unit-response';
 import { Constants } from '../shared/constants';
 import { BaseService } from './base-service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,10 @@ import { BaseService } from './base-service';
 export class UnitService extends BaseService<UnitRequest, UnitResponse> {
 
   constructor(
-    protected override http: HttpClient
+    protected override http: HttpClient,
+    protected override router: Router
   ) {
-    super(http);
+    super(http, router);
     this.url = Constants.unit;
   }
 

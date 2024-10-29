@@ -16,21 +16,6 @@
             <mat-error *ngIf="(formMachine.get('idUnit')?.hasError('required'))">Unidade é obrigatória *</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Status da máquina</mat-label>
-            <mat-select formControlName="status">
-                <mat-option *ngFor="let status of status" [value]="status.code">{{status.label}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formMachine.get('status')?.hasError('required'))">Status é obrigatório *</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Última Manutenção</mat-label>
-            <input type="datetime-local" matInput formControlName="lastMaintenance" placeholder="ex: 00/00/0000 00:00">
-            <mat-error *ngIf="(formMachine.get('lastMaintenance')?.hasError('required'))">Data é obrigatório
-                *</mat-error>
-        </mat-form-field>
-
         <div class="action-buttons">
             <button mat-fab extended type="button" (click)="cancel()">Cancelar</button>
             <button mat-fab extended color="primary" type="button" [disabled]="formMachine.invalid"

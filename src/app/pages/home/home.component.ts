@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProfileLevelEnum } from 'src/app/enums/profile-level.enum';
+import { StatusOrderServiceEnum } from 'src/app/enums/status-order-service.enum';
 import { LoginService } from 'src/app/services/login.service';
 import { Constants } from 'src/app/shared/constants';
 
@@ -10,6 +11,7 @@ import { Constants } from 'src/app/shared/constants';
 })
 export class HomeComponent {
     level!: ProfileLevelEnum;
+    statusOrderServiceEnum = StatusOrderServiceEnum;
 
     constructor(
         private loginService: LoginService
@@ -18,6 +20,6 @@ export class HomeComponent {
             if (resp && resp.role) {
                 this.level = ProfileLevelEnum[resp.role as unknown as keyof typeof ProfileLevelEnum];
             }
-    });
+        });
     }
 }

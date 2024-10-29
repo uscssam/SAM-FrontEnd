@@ -5,6 +5,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { Constants } from '../shared/constants';
 import { MachineResponse } from '../interfaces/machine-response';
 import { BaseService } from './base-service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,10 @@ import { BaseService } from './base-service';
 export class MachineService extends BaseService<MachineRequest, MachineResponse> {
 
   constructor(
-    protected override http: HttpClient
+    protected override http: HttpClient,
+    protected override router: Router
   ) {
-    super(http);
+    super(http, router);
     this.url = Constants.machine;
   }
 
